@@ -1,48 +1,70 @@
-#implement your retriever here
+import os
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-import os
-
-# Get absolute path to samples.txt regardless of where script is run from
-base_dir = os.path.dirname(__file__)  # directory of the script
-file_path = os.path.abspath(os.path.join(base_dir, '..', 'data', 'samples.txt'))
-
-with open(file_path, 'r', encoding='utf-8') as f:
-    samples = [line.strip() for line in f if line.strip()]
-# Load data
-#with open('../data/samples.txt', 'r', encoding='utf-8') as f:
-    #samples = [line.strip() for line in f if line.strip()]
-#samples = samples[:10]
-
-# Encode
-model = SentenceTransformer('all-MiniLM-L6-v2')
-embeddings = model.encode(samples)
-
-# Similarity
-similarity = cosine_similarity(embeddings)
-
-# Display
-for i in range(len(samples)):
-    for j in range(len(samples)):
-        print(f"Similarity between Sample {i+1} and Sample {j+1}: {similarity[i][j]:.2f}")
-        
-        
 from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 
-# Reduce to 2D
-pca = PCA(n_components=2)
-reduced_embeddings = pca.fit_transform(embeddings)
+# Set your data folder
+base_dir = os.path.dirname(__file__)
+data_dir = os.path.abspath(os.path.join(base_dir, '..', 'data'))
 
-# Plot
+# Load all .txt files in the data directory
+text_samples = []
+file_labels = []
+
+for filename in sorted(os.listdir(data_dir)):
+    if filename.endswith('.txt'):
+        file_path = os.path.join(data_dir, filename)
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read().strip()
+            if content:
+                text_samples.append(content)
+                file_labels.append(filename)
+
+print(f"Loaded {len(text_samples)} files.")
+
+# Encode text
+model = SentenceTransformer('all-MiniLM-L6-v2')
+embeddings = model.encode(text_samples)
+
+# Cosine similarity
+similarity = cosine_similarity(embeddings)
+print("\nCosine Similarity Matrix:")
+for i in range(len(file_labels)):
+    for j in range(len(file_labels)):
+        print(f"{file_labels[i]} vs {file_labels[j]}: {similarity[i][j]:.2f}")
+
+# PCA Visualization
+pca = PCA(n_components=2)
+pca_embeddings = pca.fit_transform(embeddings)
+
+colors = ['blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'gray', 'cyan']
+
 plt.figure(figsize=(8, 6))
-for i, point in enumerate(reduced_embeddings):
-    plt.scatter(point[0], point[1])
-    plt.annotate(f"Sample {i+1}", (point[0]+0.01, point[1]+0.01))
-plt.title("PCA Projection of Text Embeddings")
+for i, point in enumerate(pca_embeddings):
+    plt.scatter(point[0], point[1], color=colors[i % len(colors)], s=100)
+    plt.text(point[0]+0.01, point[1]+0.01, file_labels[i], fontsize=9)
+plt.title("PCA Projection of Document Embeddings")
 plt.xlabel("PCA Component 1")
 plt.ylabel("PCA Component 2")
 plt.grid(True)
 plt.tight_layout()
+plt.savefig("pca_plot.png")
 plt.show()
 
+# t-SNE Visualization
+tsne = TSNE(n_components=2, perplexity=5, random_state=42)
+tsne_embeddings = tsne.fit_transform(embeddings)
+
+plt.figure(figsize=(8, 6))
+for i, point in enumerate(tsne_embeddings):
+    plt.scatter(point[0], point[1], color=colors[i % len(colors)], s=100)
+    plt.text(point[0]+1, point[1]+1, file_labels[i], fontsize=9)
+plt.title("t-SNE Projection of Document Embeddings")
+plt.xlabel("t-SNE Dim 1")
+plt.ylabel("t-SNE Dim 2")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("tsne_plot.png")
+plt.show()
