@@ -1,15 +1,16 @@
+import os
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
-import os
 
-# === Load and embed files ===
+# === SETUP ===
 base_dir = os.path.dirname(__file__)
 data_dir = os.path.abspath(os.path.join(base_dir, '..', 'data'))
 
 texts = []
 labels = []
 
+# === Load all text files ===
 for fname in sorted(os.listdir(data_dir)):
     if fname.endswith('.txt'):
         path = os.path.join(data_dir, fname)
@@ -19,26 +20,53 @@ for fname in sorted(os.listdir(data_dir)):
                 texts.append(content)
                 labels.append(fname)
 
-print(f"Loaded {len(texts)} documents.")
+print(f" Loaded {len(texts)} documents.")
 
 # === Generate embeddings ===
 model = SentenceTransformer('all-MiniLM-L6-v2')
-embeddings = model.encode(texts)
-embeddings = np.array(embeddings).astype("float32")  # FAISS needs float32
+embeddings = model.encode(texts).astype("float32")  # FAISS needs float32
 
-# === Build FAISS index ===
+# === Build & populate FAISS index ===
 dimension = embeddings.shape[1]
-index = faiss.IndexFlatL2(dimension)  # L2 = Euclidean distance (can use cosine with normalization)
+index = faiss.IndexFlatL2(dimension)
 index.add(embeddings)
-print("FAISS index built and populated!")
+print(" FAISS index built and populated in memory.")
 
-# === Try a similarity search ===
-query_text = "A story about a magical school and a young wizard."
-query_embedding = model.encode([query_text]).astype("float32")
+# === Define 5 rephrasings of the same semantic question ===
+query_variants = [
+    "A young wizard attending a magical school.",
+    "A story of a boy who learns magic with friends.",
+    "An orphan goes to a school to become a wizard.",
+    "A fantasy novel set in a school for young wizards.",
+    "A magical academy for children learning spells."
+]
 
-k = 3  # top 3 most similar
-D, I = index.search(query_embedding, k)  # D = distances, I = indices
+# === Run search for each variant ===
+top_k = 3
+results_by_query = {}
 
-print(f"\nTop {k} similar documents for query:")
-for i, idx in enumerate(I[0]):
-    print(f"{i+1}. {labels[idx]} (Distance: {D[0][i]:.4f})")
+for query_text in query_variants:
+    query_embedding = model.encode([query_text]).astype("float32")
+    # Optional normalization for cosine-like search
+    # faiss.normalize_L2(query_embedding)
+
+    D, I = index.search(query_embedding, top_k)
+
+    results = []
+    for i, idx in enumerate(I[0]):
+        results.append({
+            'rank': i + 1,
+            'file': labels[idx],
+            'distance': D[0][i],
+            'preview': texts[idx][:100].replace('\n', ' ') + "..."
+        })
+
+    results_by_query[query_text] = results
+
+# === Print comparison of top results ===
+print("\n === TOP-K RESULTS PER QUERY VARIANT ===\n")
+for q, results in results_by_query.items():
+    print(f" Query: \"{q}\"")
+    for res in results:
+        print(f"  {res['rank']}. {res['file']} (Distance: {res['distance']:.4f})")
+    print("-" * 60)
