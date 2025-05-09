@@ -1,30 +1,108 @@
-# RAG Project – Summer Semester 2025
 
-## Overview
+#  Semantic QA Pipeline with FAISS & Transformers
 
-This repository hosts the code for a semester-long project on building and experimenting with Retrieval-Augmented Generation (RAG) systems. Students start with a shared baseline and then explore specialized variations in teams.
+This project implements a simple yet powerful question-answering (QA) pipeline using:
+- **FAISS** for fast semantic document retrieval
+- **SentenceTransformers** for embeddings
+- **Transformers** (HuggingFace) for QA generation
+- Text documents as the knowledge base
 
-## Structure
+---
 
-- `baseline/`: Common starter system (retriever + generator)
-- `experiments/`: Each team's independent exploration
-- `evaluation/`: Common tools for comparing results
-- `utils/`: Helper functions shared across code
+## 📁 Project Structure
 
-## Getting Started
+```
+NLProc-Proj-M-SS25/
+baseline/
+├── data/                    # Text documents used as context
+│   ├── Alice's Adventures in Wonderland.txt
+│   ├── Harry Potter and the Sorcerer's Stone.txt
+│   └── ... (other .txt files)
+├── generator/
+│   └── generator.py         # (Optional) Transformer-based QA generation
+├── retriever/
+│   └── retriever.py         # Handles semantic search & FAISS
+├── retriever_index/         # Saved FAISS index + metadata (auto-created)
+│   ├── doc_ids.txt
+│   ├── faiss.index
+│   └── id_to_doc.json
+├── pipeline.py              # Main entry point to run the retriever
+├── test_retriever.py        # Unit tests for retriever
+└── README.md                # This file
 
-1. Clone the repo
-2. `cd baseline/`
-3. Install dependencies: `pip install -r ../requirements.txt`
+```
 
-## How Vector Search Works
+---
 
-Traditional keyword-based search systems match exact terms between a query and a document. In contrast, vector search uses machine learning models to capture the **semantic meaning** of text.
+## 🚀 How It Works
 
-In this project, we use a pre-trained `SentenceTransformer` to convert each document and query into a **dense vector** (embedding) in a high-dimensional space. These embeddings are then stored in a **FAISS index**, which enables fast similarity search.
+### 1. Load and Chunk Documents
+- Loads `.txt` files from `/data/`
+- Splits them into manageable chunks
 
-At retrieval time, the user’s query is also embedded, and FAISS searches for vectors in the index that are **closest** (by Euclidean distance or cosine similarity). This allows us to retrieve relevant documents even when the **query and document use different wording**, as long as their meanings are similar.
+### 2. Create Embeddings
+- Uses `all-MiniLM-L6-v2` from SentenceTransformers
+- Stores chunks and their vectors in a FAISS index
 
-This approach forms the core of **Retrieval-Augmented Generation (RAG)**, where high-quality retrieved documents can be used to generate accurate and context-aware answers.
+### 3. Answer Questions
+- Retrieves top-k relevant chunks
+- Feeds context into `deepset/roberta-base-squad2`
+- Returns the generated answer
 
-## Teams & Tracks
+---
+
+## ⚙️ How to Run
+
+### 🔹 Run the QA system
+
+```bash
+cd baseline
+python pipeline.py
+```
+
+You’ll see:
+```bash
+Enter your question (or 'exit' to quit):
+> Who founded Hogwarts?
+Answer: Godric Gryffindor, Helga Hufflepuff, Rowena Ravenclaw, and Salazar Slytherin
+```
+
+---
+
+## 🧪 Run Tests
+
+```bash
+python test_retriever.py
+```
+
+You should see output like:
+
+```
+✔ Chunking test passed.
+✔ Query relevance test passed.
+✔ Save/load test passed.
+```
+
+---
+
+## 🛠 Requirements
+
+```bash
+pip install faiss-cpu sentence-transformers transformers torch
+
+```
+
+---
+
+## 📌 Example
+
+```python
+from pipeline.pipeline import QAPipeline
+
+qa = QAPipeline()
+print(qa.answer("What is the Hundred Acre Wood?"))
+```
+
+## 🧑‍💻 Authors
+
+Developed for the NLP Project (SS2025) at University of Bamberg by Team "Triple Trouble".
