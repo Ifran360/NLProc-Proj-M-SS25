@@ -2,71 +2,81 @@ import os
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from typing import List, Dict
 
-# === SETUP ===
-base_dir = os.path.dirname(__file__)
-data_dir = os.path.abspath(os.path.join(base_dir, '..', 'data'))
+class Retriever:
+    def __init__(self, model_name='all-MiniLM-L6-v2'):
+        self.model = SentenceTransformer(model_name)
+        self.index = None
+        self.dimension = None
+        self.documents = []
+        self.doc_ids = []
+        self.id_to_doc = {}
 
-texts = []
-labels = []
+    def _chunk_text(self, text: str, chunk_size: int = 200) -> List[str]:
+        return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
 
-# === Load all text files ===
-for fname in sorted(os.listdir(data_dir)):
-    if fname.endswith('.txt'):
-        path = os.path.join(data_dir, fname)
-        with open(path, 'r', encoding='utf-8') as f:
-            content = f.read().strip()
-            if content:
-                texts.append(content)
-                labels.append(fname)
+    def add_documents(self, documents: List[Dict], chunk_size: int = 200):
+        """
+        documents: List of dicts: { "id": str, "text": str }
+        """
+        all_chunks = []
+        chunk_ids = []
 
-print(f" Loaded {len(texts)} documents.")
+        for doc in documents:
+            chunks = self._chunk_text(doc['text'], chunk_size)
+            for i, chunk in enumerate(chunks):
+                chunk_id = f"{doc['id']}_chunk{i}"
+                all_chunks.append(chunk)
+                chunk_ids.append(chunk_id)
+                self.id_to_doc[chunk_id] = chunk
 
-# === Generate embeddings ===
-model = SentenceTransformer('all-MiniLM-L6-v2')
-embeddings = model.encode(texts).astype("float32")  # FAISS needs float32
+        embeddings = self.model.encode(all_chunks).astype('float32')
+        self.dimension = embeddings.shape[1]
 
-# === Build & populate FAISS index ===
-dimension = embeddings.shape[1]
-index = faiss.IndexFlatL2(dimension)
-index.add(embeddings)
-print(" FAISS index built and populated in memory.")
+        if self.index is None:
+            self.index = faiss.IndexFlatL2(self.dimension)
 
-# === Define 5 rephrasings of the same semantic question ===
-query_variants = [
-    "A young wizard attending a magical school.",
-    "A story of a boy who learns magic with friends.",
-    "An orphan goes to a school to become a wizard.",
-    "A fantasy novel set in a school for young wizards.",
-    "A magical academy for children learning spells."
-]
+        self.index.add(embeddings)
+        self.doc_ids.extend(chunk_ids)
+        print(f"✅ Added {len(all_chunks)} chunks from {len(documents)} documents to the index.")
 
-# === Run search for each variant ===
-top_k = 3
-results_by_query = {}
+    def query(self, text: str, k: int = 3):
+        if self.index is None:
+            raise ValueError("FAISS index is not loaded or built.")
 
-for query_text in query_variants:
-    query_embedding = model.encode([query_text]).astype("float32")
-    # Optional normalization for cosine-like search
-    # faiss.normalize_L2(query_embedding)
+        if not self.doc_ids:
+            raise ValueError("Document IDs are missing. Did you forget to call add_documents() after load()?")
 
-    D, I = index.search(query_embedding, top_k)
+        query_vec = self.model.encode([text]).astype('float32')
+        D, I = self.index.search(query_vec, k)
 
-    results = []
-    for i, idx in enumerate(I[0]):
-        results.append({
-            'rank': i + 1,
-            'file': labels[idx],
-            'distance': D[0][i],
-            'preview': texts[idx][:100].replace('\n', ' ') + "..."
-        })
+        results = []
+        for i in range(k):
+            idx = I[0][i]
+            doc_id = self.doc_ids[idx]
 
-    results_by_query[query_text] = results
+            # Provide a fallback message if id_to_doc is missing
+            chunk_text = self.id_to_doc.get(doc_id, "[Text not loaded. Call add_documents(..., skip_indexing=True) after loading index.]")
 
-# === Print comparison of top results ===
-print("\n === TOP-K RESULTS PER QUERY VARIANT ===\n")
-for q, results in results_by_query.items():
-    print(f" Query: \"{q}\"")
-    for res in results:
-        print(f"  {res['rank']}. {res['file']} (Distance: {res['distance']:.4f})")
-    print("-" * 60)
+            results.append({
+                "chunk_id": doc_id,
+                "text": chunk_text,
+                "distance": D[0][i]
+            })
+
+        return results
+
+
+    def save(self, path: str):
+        faiss.write_index(self.index, os.path.join(path, "faiss.index"))
+        with open(os.path.join(path, "doc_ids.txt"), "w", encoding="utf-8") as f:
+            for doc_id in self.doc_ids:
+                f.write(doc_id + "\n")
+        print(f"💾 Index and metadata saved to {path}")
+
+    def load(self, path: str):
+        self.index = faiss.read_index(os.path.join(path, "faiss.index"))
+        with open(os.path.join(path, "doc_ids.txt"), "r", encoding="utf-8") as f:
+            self.doc_ids = [line.strip() for line in f]
+        print(f"📂 Loaded FAISS index and {len(self.doc_ids)} chunk IDs from {path}")
