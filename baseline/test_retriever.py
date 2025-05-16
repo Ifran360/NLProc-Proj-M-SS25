@@ -25,7 +25,7 @@ class TestRetriever(unittest.TestCase):
         print(" Chunking test passed.")
 
     def test_saving_and_loading(self):
-        save_path = "test_index"
+         
         os.makedirs(save_path, exist_ok=True)
 
         self.retriever.save(save_path)
