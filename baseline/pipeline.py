@@ -26,7 +26,7 @@ def load_text_files_from_folder(folder_path):
                 documents.append({"id": doc_id, "text": text})
     return documents
 
-def log_result(question, retrieved_chunks, prompt, answer, group_id="default"):
+def log_result(question, retrieved_chunks, prompt, answer, group_id="Team Triple Trouble"):
     log_entry = {
         "timestamp": datetime.now().isoformat(),
         "group_id": group_id,
