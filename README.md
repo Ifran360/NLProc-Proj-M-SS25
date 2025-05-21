@@ -1,108 +1,109 @@
 
-#  Semantic QA Pipeline with FAISS & Transformers
+# Semantic QA Pipeline with FAISS & Transformers
 
-This project implements a simple yet powerful question-answering (QA) pipeline using:
-- **FAISS** for fast semantic document retrieval
-- **SentenceTransformers** for embeddings
-- **Transformers** (HuggingFace) for QA generation
-- Text documents as the knowledge base
+This project implements a modular and extensible semantic question-answering (QA) pipeline using:
 
----
+- FAISS for fast vector-based document retrieval
+- SentenceTransformers for dense embeddings
+- Transformers (flan-t5-base) for generative answer generation
+- .txt files as the document knowledge base
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 NLProc-Proj-M-SS25/
-baseline/
-├── data/                    # Text documents used as context
-│   ├── Alice's Adventures in Wonderland.txt
-│   ├── Harry Potter and the Sorcerer's Stone.txt
-│   └── ... (other .txt files)
-├── generator/
-│   └── generator.py         # (Optional) Transformer-based QA generation
-├── retriever/
-│   └── retriever.py         # Handles semantic search & FAISS
-├── retriever_index/         # Saved FAISS index + metadata (auto-created)
-│   ├── doc_ids.txt
-│   ├── faiss.index
-│   └── id_to_doc.json
-├── pipeline.py              # Main entry point to run the retriever
-├── test_retriever.py        # Unit tests for retriever
-└── README.md                # This file
-
+└── baseline/
+    ├── data/                    # Raw text documents (knowledge base)
+    │   ├── Alice.txt
+    │   ├── HarryPotter.txt
+    │   └── ...
+    ├── generator/
+    │   └── generator.py         # QA answer generation (T5 model)
+    ├── retriever/
+    │   └── retriever.py         # FAISS-based semantic retriever
+    ├── retriever_index/         # Auto-created directory for index/metadata
+    │   ├── faiss.index
+    │   └── metadata.pkl
+    ├── pipeline.py              # Main script: loads documents, runs QA loop
+    ├── test_inputs.json         # Known Q&A test pairs
+    ├── test_pipeline.py         # End-to-end pipeline testing
+    ├── test_retriever.py        # Unit tests for the retriever class
+    └── README.md                # This file
 ```
 
----
-
-## 🚀 How It Works
+## How It Works
 
 ### 1. Load and Chunk Documents
-- Loads `.txt` files from `/data/`
-- Splits them into manageable chunks
+- Reads `.txt` files from `baseline/data/`
+- Chunks long text into smaller pieces (default: 500 chars)
 
-### 2. Create Embeddings
-- Uses `all-MiniLM-L6-v2` from SentenceTransformers
-- Stores chunks and their vectors in a FAISS index
+### 2. Embed & Index with FAISS
+- Uses `all-MiniLM-L6-v2` to encode chunks
+- Chunks + embeddings are stored in a FAISS index (`retriever_index/`)
 
-### 3. Answer Questions
-- Retrieves top-k relevant chunks
-- Feeds context into `deepset/roberta-base-squad2`
-- Returns the generated answer
+### 3. Interactive QA Pipeline
+- Accepts a question from user via terminal
+- Retrieves top-k chunks based on semantic similarity
+- Feeds context into `flan-t5-base` for answer generation
 
----
+## How to Run
 
-## ⚙️ How to Run
-
-### 🔹 Run the QA system
-
+### Launch Interactive QA
 ```bash
 cd baseline
 python pipeline.py
 ```
 
-You’ll see:
-```bash
-Enter your question (or 'exit' to quit):
-> Who founded Hogwarts?
-Answer: Godric Gryffindor, Helga Hufflepuff, Rowena Ravenclaw, and Salazar Slytherin
+Then enter:
+```text
+Your question: Where does Mary Lennox come from?
+Generated answer: India
 ```
 
----
+### Run Unit Tests
 
-## 🧪 Run Tests
-
+#### Retriever Logic
 ```bash
 python test_retriever.py
 ```
 
-You should see output like:
-
-```
-✔ Chunking test passed.
-✔ Query relevance test passed.
-✔ Save/load test passed.
+#### Full Pipeline Test (using `test_inputs.json`)
+```bash
+python test_pipeline.py
 ```
 
----
+Expected output:
+```
+Q: Where does Harry Potter study?
+A: Hogwarts
+Context: ...Harry goes to Hogwarts, a magical school...
+```
 
-## 🛠 Requirements
+## Installation Requirements
 
 ```bash
-pip install faiss-cpu sentence-transformers transformers torch
-
+pip install reqirements.txt
 ```
 
----
-
-## 📌 Example
+## Example Usage in Code
 
 ```python
-from pipeline.pipeline import QAPipeline
+from pipeline import QAPipeline
 
 qa = QAPipeline()
 print(qa.answer("What is the Hundred Acre Wood?"))
 ```
 
-## 🧑‍💻 Authors
+## Sample Documents
 
-Developed for the NLP Project (SS2025) at University of Bamberg by Team "Triple Trouble".
+All text files used in `baseline/data/` are plain `.txt` files containing paragraphs from children's books such as:
+
+- Harry Potter
+- The Secret Garden
+- Matilda
+- Winnie-the-Pooh
+
+## Authors
+
+Developed by Team Triple Trouble  
+University of Bamberg — NLP Project (SS2025)
