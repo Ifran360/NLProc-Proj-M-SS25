@@ -2,3 +2,4 @@ openai
 sentence-transformers 
 faiss-cpu 
 hf_xet 
+sentencepiece

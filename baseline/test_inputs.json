@@ -1,0 +1,14 @@
+[
+    {
+        "question": "Where does Harry Potter study?",
+        "expected_answer": "Hogwarts"
+    },
+    {
+        "question": "Where does Mary Lennox come from?",
+        "expected_answer": "India"
+    },
+    {
+        "question": "What kind of bear is Winnie-the-Pooh?",
+        "expected_answer": "gentle"
+    }
+]

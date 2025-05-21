@@ -3,26 +3,9 @@ import faiss
 import numpy as np
 import pickle
 from sentence_transformers import SentenceTransformer
-from typing import List, Dict, Optional
+from typing import List, Dict
 
 class Retriever:
-    """
-    A semantic document retriever using SentenceTransformers for embeddings and FAISS for indexing.
-    
-    Methods:
-        - add_documents(): Indexes provided documents (with chunking)
-        - query(): Returns most relevant text chunks
-        - save(): Saves FAISS index and metadata
-        - load(): Loads FAISS index and metadata
-
-    Example usage:
-    >>> retriever = Retriever()
-    >>> retriever.add_documents([{"id": "doc1", "text": "Sample document text."}])
-    >>> retriever.save("./index_dir")
-    >>> retriever.load("./index_dir")
-    >>> results = retriever.query("sample", k=1)
-    """
-
     def __init__(self, model_name: str = 'all-MiniLM-L6-v2', chunk_size: int = 500):
         self.model = SentenceTransformer(model_name)
         self.chunk_size = chunk_size
@@ -36,9 +19,7 @@ class Retriever:
     def add_documents(self, documents: List[Dict[str, str]]):
         """
         Adds and indexes documents with chunking.
-
-        Args:
-            documents: List of dicts, each with 'id' and 'text'.
+        Each doc should have an 'id' and 'text'.
         """
         all_chunks = []
         all_ids = []
@@ -50,52 +31,66 @@ class Retriever:
             all_ids.extend(chunk_ids)
 
         embeddings = self.model.encode(all_chunks).astype("float32")
+
         self.index = faiss.IndexFlatL2(embeddings.shape[1])
         self.index.add(embeddings)
-
         self.chunks = all_chunks
         self.chunk_ids = all_ids
 
     def query(self, text: str, k: int = 3) -> List[Dict[str, str]]:
         """
-        Queries the retriever and returns top matching chunks.
-
-        Args:
-            text: Query string.
-            k: Number of top results to return.
-
-        Returns:
-            List of dicts with 'chunk_id', 'text', 'distance'.
+        Returns top-k most relevant chunks for a query.
         """
-        if not self.index:
-            raise ValueError("Index is empty. Please add documents first.")
+        if self.index is None:
+            raise ValueError("Index is empty. Please add or load documents.")
 
         embedding = self.model.encode([text]).astype("float32")
         distances, indices = self.index.search(embedding, k)
 
         results = []
+        seen = set()
+
         for rank, idx in enumerate(indices[0]):
+            if idx == -1 or distances[0][rank] > 1e6:
+                continue  # Skip bad results
+
+            chunk_id = self.chunk_ids[idx]
+            if chunk_id in seen:
+                continue  # Deduplicate
+            seen.add(chunk_id)
+
             results.append({
-                "chunk_id": self.chunk_ids[idx],
+                "chunk_id": chunk_id,
                 "text": self.chunks[idx],
                 "distance": float(distances[0][rank])
             })
+
         return results
 
     def save(self, path: str):
         """
-        Saves FAISS index and metadata to the given directory.
+        Saves FAISS index and metadata (chunks + ids).
         """
+        os.makedirs(path, exist_ok=True)
         faiss.write_index(self.index, os.path.join(path, "faiss.index"))
         with open(os.path.join(path, "metadata.pkl"), "wb") as f:
-            pickle.dump({"chunks": self.chunks, "chunk_ids": self.chunk_ids}, f)
+            pickle.dump({
+                "chunks": self.chunks,
+                "chunk_ids": self.chunk_ids
+            }, f)
 
     def load(self, path: str):
         """
-        Loads FAISS index and metadata from the given directory.
+        Loads index and metadata from path.
         """
-        self.index = faiss.read_index(os.path.join(path, "faiss.index"))
-        with open(os.path.join(path, "metadata.pkl"), "rb") as f:
-            data = pickle.load(f)
-            self.chunks = data["chunks"]
-            self.chunk_ids = data["chunk_ids"]
+        index_path = os.path.join(path, "faiss.index")
+        meta_path = os.path.join(path, "metadata.pkl")
+
+        if not os.path.exists(index_path) or not os.path.exists(meta_path):
+            raise FileNotFoundError("Missing index or metadata file at path.")
+
+        self.index = faiss.read_index(index_path)
+        with open(meta_path, "rb") as f:
+            metadata = pickle.load(f)
+            self.chunks = metadata["chunks"]
+            self.chunk_ids = metadata["chunk_ids"]

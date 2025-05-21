@@ -4,6 +4,9 @@ import os
 import shutil
 from retriever.retriever import Retriever
 
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+save_path = os.path.join(BASE_DIR, "test_index")
 class TestRetriever(unittest.TestCase):
 
     def setUp(self):
