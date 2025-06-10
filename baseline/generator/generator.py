@@ -22,7 +22,7 @@ class Generator:
             return f"Given the context below, answer the question.\n\nContext:\n{context}\n\nQuestion:\n{question}"
         elif task_type == "summarize":
             return (
-                "Summarize the following text clearly and concisely. Focus on key events and characters:\n\n"
+                "Give an overall summery. Focus on key events and characters:\n\n"
                 f"{context}"
             )
         elif task_type == "mcq":
