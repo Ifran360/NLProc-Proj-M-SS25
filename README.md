@@ -1,162 +1,162 @@
+# Semantic QA & Summarization Pipeline with FAISS & Transformers
 
-# Semantic QA Pipeline with FAISS & Transformers
+This project implements a modular and extensible NLP pipeline capable of:
 
-This project implements a modular and extensible semantic question-answering (QA) pipeline using:
+- Semantic Question Answering  
+- Text Summarization  
+- Multiple-Choice Question (MCQ) Generation  
 
-- FAISS for fast vector-based document retrieval
-- SentenceTransformers for dense embeddings
-- Transformers (flan-t5-base) for generative answer generation
-- .txt files as the document knowledge base
+Using:
+
+- FAISS for fast vector-based document retrieval  
+- SentenceTransformers for dense embeddings  
+- Transformers (`flan-t5-large`) for generative output  
+- `.txt` and `.pdf` documents as the knowledge base  
+
+---
 
 ## Project Structure
 
 ```
 NLProc-Proj-M-SS25/
 └── baseline/
-    ├── data/                    # Raw text documents (knowledge base)
-    │   ├── Alice.txt
-    │   ├── HarryPotter.txt
-    │   └── ...
+    ├── data/                    # Raw .txt or .pdf files (knowledge base)
+    │   ├── Matilda.txt
+    │   ├── WizardOfOz.pdf
     ├── generator/
-    │   └── generator.py         # QA answer generation (T5 model)
+    │   └── generator.py         # T5-based text generation
     ├── retriever/
-    │   └── retriever.py         # FAISS-based semantic retriever
+    │   ├── retriever.py         # FAISS-based semantic retriever
+    │   └── utils.py             # Utilities for loading & chunking files
     ├── retriever_index/         # Auto-created directory for index/metadata
     │   ├── faiss.index
     │   └── metadata.pkl
-    ├── pipeline.py              # Main script: loads documents, runs QA loop
-    ├── test_inputs.json         # Known Q&A test pairs
+    ├── logs/
+    │   └── log.jsonl            # Stores logs of each interaction
+    ├── pipeline.py              # Main CLI interface (QA, summarize, MCQ)
+    ├── test_inputs.json         # Known Q&A test cases
     ├── test_pipeline.py         # End-to-end pipeline testing
-    ├── test_retriever.py        # Unit tests for the retriever class
+    ├── test_retriever.py        # Unit tests for retriever logic
     └── README.md                # This file
 ```
 
+---
 
-## Recommended Python Version
-This project requires Python 3.10.
+## Python Requirements
 
-Please ensure you are using Python 3.10, as other versions may cause compatibility issues.
-### You can check your Python version with:
+- Python version: **3.10** recommended  
+- To check:
 ```bash
 python --version
 ```
-Download Python 3.10 here: https://www.python.org/downloads/release/python-3100/
+- Download Python 3.10: https://www.python.org/downloads/release/python-3100/
+
+---
 
 ## How It Works
 
-### 1. Load and Chunk Documents
-- Reads `.txt` files from `baseline/data/`
-- Chunks long text into smaller pieces (default: 500 chars)
+### 1. Load & Chunk Documents
+- Supports both `.txt` and `.pdf` files
+- Chunks content into blocks of ~500 characters for embedding
 
 ### 2. Embed & Index with FAISS
-- Uses `all-MiniLM-L6-v2` to encode chunks
-- Chunks + embeddings are stored in a FAISS index (`retriever_index/`)
+- Embeds each chunk using `all-MiniLM-L6-v2`
+- Stores vector embeddings and metadata with FAISS for fast retrieval
 
-### 3. Interactive QA Pipeline
-- Accepts a question from user via terminal
-- Retrieves top-k chunks based on semantic similarity
-- Feeds context into `flan-t5-base` for answer generation
+### 3. Multi-Task Interactive Pipeline
+- On launch, users specify a task:
+  - `qa`: Answer questions  
+  - `summarize`: Summarize document content  
+  - `mcq`: Generate multiple-choice questions  
+- Relevant chunks are retrieved and fed into a prompt for `flan-t5-large`  
 
-### 4. Retriever
-- Retriever class using SentenceTransformer (all-MiniLM-L6-v2)
-- Chunks input text (500 characters)
-- Encodes with embeddings
-- Indexes using FAISS
-
-### 5. Generator
-- Generator class using Flan-T5-Base (small, CPU-friendly)
-- Builds prompt with retrieved context + question
-- Outputs answer
-
-### 6. Integration Pipeline
-- pipeline.py: Connects both modules
-- Accepts live user input or test sets
-
-
-
+---
 
 ## How to Run
-### Installation Requirements
 
+### 1. Install Dependencies
 ```bash
-pip install reqirements.txt
+pip install -r requirements.txt
 ```
 
-### Launch Interactive QA
+### 2. Start the Interactive Pipeline
 ```bash
 cd baseline
 python pipeline.py
 ```
 
-Then enter:
-```text
-Your question: Where does Mary Lennox come from?
-Generated answer: India
+You will be prompted like this:
+```
+Task Type [qa/summarize/mcq]: summarize
+Prompt: Summarize the story of Matilda
 ```
 
-### Run Unit Tests
+### 3. Run Unit Tests
 
-#### Retriever Logic
+#### a. Test Retriever Logic
 ```bash
 python test_retriever.py
 ```
 
-#### Full Pipeline Test (using `test_inputs.json`)
+#### b. Test Full Pipeline with Predefined Inputs
 ```bash
 python test_pipeline.py
 ```
-In this test, you will be prompted to enter a question based on the preloaded context.
-The system will retrieve relevant information and generate an answer along with the supporting context.
 
-
-Expected output:
+Sample Output:
 ```
 Q: Where does Harry Potter study?
 A: Hogwarts
 Context: ...Harry goes to Hogwarts, a magical school...
 ```
 
+---
 
-## Example Usage in Code
+## Code Usage Example
 
 ```python
-from pipeline import QAPipeline
-
-qa = QAPipeline()
-print(qa.answer("What is the Hundred Acre Wood?"))
+from pipeline import main
+main()
 ```
 
-### Logs
+---
 
-All interactions during the execution of the pipeline are logged and stored in a JSON file for traceability and debugging purposes.
+## Logging
 
-**Log File Location:**
+All interactions are logged in JSON Lines format.
 
+**Log File:**  
+```
+baseline/logs/log.jsonl
+```
 
-**Log Format:**
+**Each log contains:**
 
-Each log entry is a JSON object containing the following fields:
+| Field             | Description                                                       |
+|------------------|-------------------------------------------------------------------|
+| `timestamp`       | Time when the interaction occurred                                |
+| `group_id`        | Optional identifier for batch tasks                               |
+| `task_type`       | Type of task (qa, summarize, mcq)                                 |
+| `question`        | User input or prompt                                              |
+| `retrieved_chunks`| Top-k context chunks used as input                               |
+| `prompt`          | Final prompt passed to the Flan-T5 model                          |
+| `generated_answer`| Output from the model                                             |
 
-| Field             | Description                                                                 |
-|------------------|-----------------------------------------------------------------------------|
-| `timestamp`       | The date and time when the question was processed.                          |
-| `group_id`        | An identifier for grouping related queries (default: `"default"`).          |
-| `question`        | The user's input question.                                                  |
-| `retrieved_chunks`| A list of context passages retrieved from the knowledge base.               |
-| `prompt`          | The final prompt constructed and fed to the language model.                 |
-| `generated_answer`| The answer returned by the model based on the retrieved context.            |
-
+---
 
 ## Sample Documents
 
-All text files used in `baseline/data/` are plain `.txt` files containing paragraphs from children's books such as:
+All files in `baseline/data/` are children's literature in `.txt` or `.pdf` format:
 
-- Harry Potter
-- The Secret Garden
-- Matilda
-- Winnie-the-Pooh
+- Matilda  
+- The Wonderful Wizard of Oz  
+- Winnie-the-Pooh  
+- The Secret Garden  
+- Harry Potter (sample excerpts)
+
+---
 
 ## Authors
 
-Developed by Team Triple Trouble  
+Developed by **Team Triple Trouble**  
 University of Bamberg — NLP Project (SS2025)
