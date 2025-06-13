@@ -1,0 +1,14 @@
+[
+  {
+    "id": "What is the Hundred Acre Wood?",
+    "cosine_similarity": 0.4500685100732499,
+    "bertscore": 0.9034618735313416,
+    "word_overlap": 0.3
+  },
+  {
+    "id": "Where does Harry Potter study?",
+    "cosine_similarity": 0.2205739479127585,
+    "bertscore": 0.8841835856437683,
+    "word_overlap": 0.23076923076923078
+  }
+]

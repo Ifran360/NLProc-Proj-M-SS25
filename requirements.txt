@@ -4,3 +4,7 @@ faiss-cpu
 hf_xet 
 sentencepiece
 pymupdf
+bert-score
+scikit-learn
+nltk
+evaluate

@@ -19,25 +19,20 @@ Using:
 
 ```
 NLProc-Proj-M-SS25/
-└── baseline/
-    ├── data/                    # Raw .txt or .pdf files (knowledge base)
-    │   ├── Matilda.txt
-    │   ├── WizardOfOz.pdf
-    ├── generator/
-    │   └── generator.py         # T5-based text generation
-    ├── retriever/
-    │   ├── retriever.py         # FAISS-based semantic retriever
-    │   └── utils.py             # Utilities for loading & chunking files
-    ├── retriever_index/         # Auto-created directory for index/metadata
-    │   ├── faiss.index
-    │   └── metadata.pkl
-    ├── logs/
-    │   └── log.jsonl            # Stores logs of each interaction
-    ├── pipeline.py              # Main CLI interface (QA, summarize, MCQ)
-    ├── test_inputs.json         # Known Q&A test cases
-    ├── test_pipeline.py         # End-to-end pipeline testing
-    ├── test_retriever.py        # Unit tests for retriever logic
-    └── README.md                # This file
+├── baseline/
+│   ├── data/
+│   ├── generator/
+│   ├── retriever/
+│   ├── retriever_index/
+│   ├── logs/
+│   ├── pipeline.py
+│   ├── test_inputs.json
+│   ├── test_pipeline.py
+│   ├── test_retriever.py
+│   └── README.md
+└── evaluation/
+    ├── evaluation.py          # Evaluation script
+    └── summaries.json         # Input file with generated vs reference summaries
 ```
 
 ---
@@ -91,23 +86,70 @@ Task Type [qa/summarize/mcq]: summarize
 Prompt: Summarize the story of Matilda
 ```
 
-### 3. Run Unit Tests
+---
 
-#### a. Test Retriever Logic
+## Evaluation
+
+You can evaluate the quality of generated summaries against reference summaries using multiple metrics:
+
+- **Cosine Similarity** (TF-IDF)
+- **BERTScore** (semantic similarity)
+- **Word Overlap** (lexical overlap)
+
+### Step-by-Step Instructions
+
+1. Make sure your input JSON (`summaries.json`) looks like this:
+```json
+[
+  {
+    "question": "What is the Hundred Acre Wood?",
+    "reference": "The Hundred Acre Wood is the fictional forest home of Winnie-the-Pooh.",
+    "generated": "It is the place where Winnie-the-Pooh and his friends live."
+  }
+]
+```
+
+2. First-time users: Download `nltk` data before running:
+```bash
+python
+```
+Then in the Python shell:
+```python
+import nltk
+nltk.download('punkt')
+exit()
+```
+
+3. Run the evaluation script:
+```bash
+cd evaluation
+python evaluation.py --input summaries.json --output results.json
+```
+
+4. After running, check the results:
+```json
+[
+  {
+    "id": "What is the Hundred Acre Wood?",
+    "cosine_similarity": 0.45,
+    "bertscore": 0.90,
+    "word_overlap": 0.3
+  }
+]
+```
+
+---
+
+## Run Unit Tests
+
+### a. Test Retriever Logic
 ```bash
 python test_retriever.py
 ```
 
-#### b. Test Full Pipeline with Predefined Inputs
+### b. Test Full Pipeline with Predefined Inputs
 ```bash
 python test_pipeline.py
-```
-
-Sample Output:
-```
-Q: Where does Harry Potter study?
-A: Hogwarts
-Context: ...Harry goes to Hogwarts, a magical school...
 ```
 
 ---
