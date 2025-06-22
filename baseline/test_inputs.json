@@ -1,14 +1,42 @@
 [
-    {
-        "question": "Where does Harry Potter study?",
-        "expected_answer": "Hogwarts"
-    },
-    {
-        "question": "Where does Mary Lennox come from?",
-        "expected_answer": "India"
-    },
-    {
-        "question": "What kind of bear is Winnie-the-Pooh?",
-        "expected_answer": "gentle"
-    }
+  {
+    "question": "What is the Veil Nebula?",
+    "expected_answer": "A glowing cloud of gas and dust created by a supernova 8,000 years ago"
+  },
+  {
+    "question": "How far is the Veil Nebula from Earth?",
+    "expected_answer": "About 2,400 light years"
+  },
+  {
+    "question": "What device forms the basis of modern electronics?",
+    "expected_answer": "MOSFET (metal-oxide-semiconductor field-effect transistor)"
+  },
+  {
+    "question": "Who invented the MOSFET?",
+    "expected_answer": "Mohamed M. Atalla and Dawon Kahng"
+  },
+  {
+    "question": "What do modern technologies like invisibility cloaks and levitating trains rely on?",
+    "expected_answer": "Principles of physics"
+  },
+  {
+    "question": "What professions use physics principles daily?",
+    "expected_answer": "Engineers, pilots, physical therapists, physicians, programmers"
+  },
+  {
+    "question": "What does physics study?",
+    "expected_answer": "The interactions of energy, matter, space, and time"
+  },
+  {
+    "question": "What is the main law connecting topics like food calories and car batteries?",
+    "expected_answer": "The law of conservation of energy"
+  },
+  {
+    "question": "Who helped develop GPS algorithms using physics and computer science?",
+    "expected_answer": "Gladys West"
+  },
+  {
+    "question": "What does the study of physics help develop besides knowledge?",
+    "expected_answer": "Analytical and critical thinking skills"
+  }
 ]
