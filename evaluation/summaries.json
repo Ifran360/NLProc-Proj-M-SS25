@@ -1,12 +1,27 @@
 [
   {
-    "question": "What is the Hundred Acre Wood?",
-    "reference": "The Hundred Acre Wood is the fictional forest home of Winnie-the-Pooh.",
-    "generated": "It is the place where Winnie-the-Pooh and his friends live."
+    "question": "The Veil Nebula and Its Cosmic Significance",
+    "reference": "The Veil Nebula is a vast cloud of heated gas and dust about 2,400 light-years away, created by a supernova explosion that occurred around 8,000 years ago. Scientists study it to understand nebula expansion and cosmic phenomena.",
+    "generated": "Formed by a supernova 8,000 years ago, the Veil Nebula is a glowing cloud of dust and gas, offering astronomers insights into stellar explosions and space structures."
   },
   {
-    "question": "Where does Harry Potter study?",
-    "reference": "Harry studies at Hogwarts School of Witchcraft and Wizardry.",
-    "generated": "Harry Potter goes to Hogwarts."
+    "question": "The Role of Physics in Everyday Life and Technology",
+    "reference": "Physics influences everyday life through technologies like smartphones, appliances, and transportation systems. It also underpins careers in healthcare, engineering, aviation, and more by explaining forces, motion, and energy use.",
+    "generated": "From electronics to transportation and medical tools, physics is fundamental to daily technology and professional practices, impacting how we live and work."
+  },
+  {
+    "question": "The Invention and Impact of the MOSFET",
+    "reference": "The MOSFET, a type of transistor invented in 1959 by Mohamed M. Atalla and Dawon Kahng, is foundational to modern electronics. It is the most-produced device in history and is essential in computing and communication devices.",
+    "generated": "Invented in 1959, the MOSFET transistor revolutionized electronics by enabling the development of compact, efficient devices like smartphones and computers."
+  },
+  {
+    "question": "Physics in Various Professions and Careers",
+    "reference": "Careers in engineering, piloting, physical therapy, medicine, and software development use physics to understand and solve real-world problems involving motion, energy, and materials.",
+    "generated": "Professionals such as pilots, engineers, and therapists rely on physics principles to navigate forces, build technology, and support the human body."
+  },
+  {
+    "question": "Topics Covered in This Physics Textbook",
+    "reference": "The text explores the origins of physics from ancient philosophy to Newtonian mechanics, introduces measurement systems, and discusses accuracy and scientific limitations.",
+    "generated": "This physics text covers foundational topics such as Newton’s laws, scientific measurement, and the historical evolution of physics as a discipline."
   }
 ]

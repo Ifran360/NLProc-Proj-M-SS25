@@ -188,13 +188,13 @@ baseline/logs/log.jsonl
 
 ## Sample Documents
 
+Kaggel Dataset: https://www.kaggle.com/datasets/rohanthoma/ebook-pdfs
 All files in `baseline/data/` are children's literature in `.txt` or `.pdf` format:
 
-- Matilda  
-- The Wonderful Wizard of Oz  
-- Winnie-the-Pooh  
-- The Secret Garden  
-- Harry Potter (sample excerpts)
+- College_Physics_2e-WEB_7Zesafu-23-1473
+- ConceptsofBiology-WEB-19-602
+- Introduction_to_Political_Science_-_WEB-19-549
+- Secondary - 2018 - Class - 7 - English 7 BV PDF Web 
 
 ---
 
