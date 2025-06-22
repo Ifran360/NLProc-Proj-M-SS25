@@ -22,7 +22,7 @@ class Generator:
             return f"Given the context below, answer the question.\n\nContext:\n{context}\n\nQuestion:\n{question}"
         elif task_type == "summarize":
             return (
-                "Write yourself an overall summery. Focus on key events and characters:\n\n"
+                "Write a well-structured summary based on the following context. Focus on main ideas, key terms, and structure:\n\n"
                 f"{context}"
             )
         elif task_type == "mcq":
@@ -31,6 +31,16 @@ class Generator:
             raise ValueError(f"Unsupported task_type: '{task_type}'. Use 'qa', 'summarize', or 'mcq'.")
 
     def generate_answer(self, prompt: str, max_length: int = 400) -> str:
+        """
+        Generate output text from a constructed prompt.
+        """
         inputs = self.tokenizer(prompt, return_tensors="pt", truncation=True).to(self.device)
         outputs = self.model.generate(**inputs, max_length=max_length)
         return self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    def summarize_chunks(self, context_chunks: list[str], max_length: int = 400) -> str:
+        """
+        Summarize a list of context chunks.
+        """
+        prompt = self.build_prompt(context_chunks, task_type="summarize")
+        return self.generate_answer(prompt, max_length=max_length)

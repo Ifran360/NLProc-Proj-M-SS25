@@ -1,14 +1,32 @@
 [
   {
-    "id": "What is the Hundred Acre Wood?",
-    "cosine_similarity": 0.4500685100732499,
-    "bertscore": 0.9034618735313416,
-    "word_overlap": 0.3
+    "id": "The Veil Nebula and Its Cosmic Significance",
+    "cosine_similarity": 0.4161509822457411,
+    "bertscore": 0.9186238050460815,
+    "word_overlap": 0.3673469387755102
   },
   {
-    "id": "Where does Harry Potter study?",
-    "cosine_similarity": 0.2205739479127585,
-    "bertscore": 0.8841835856437683,
-    "word_overlap": 0.23076923076923078
+    "id": "The Role of Physics in Everyday Life and Technology",
+    "cosine_similarity": 0.11623680161956196,
+    "bertscore": 0.882142961025238,
+    "word_overlap": 0.1111111111111111
+  },
+  {
+    "id": "The Invention and Impact of the MOSFET",
+    "cosine_similarity": 0.37529542803826343,
+    "bertscore": 0.8916443586349487,
+    "word_overlap": 0.3170731707317073
+  },
+  {
+    "id": "Physics in Various Professions and Careers",
+    "cosine_similarity": 0.0809748368110434,
+    "bertscore": 0.8894122838973999,
+    "word_overlap": 0.11904761904761904
+  },
+  {
+    "id": "Topics Covered in This Physics Textbook",
+    "cosine_similarity": 0.23418156125035738,
+    "bertscore": 0.9150128960609436,
+    "word_overlap": 0.25
   }
 ]
