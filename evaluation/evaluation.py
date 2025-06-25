@@ -12,22 +12,22 @@ tokenizer = WordPunctTokenizer()
 # Load evaluation metrics
 bertscore = evaluate.load("bertscore")
 
-def compute_cosine_similarity(references, generations):
+def compute_cosine_similarity(references, generated):
     vectorizer = TfidfVectorizer()
-    all_texts = references + generations
+    all_texts = references + generated
     tfidf = vectorizer.fit_transform(all_texts)
     ref_vecs = tfidf[:len(references)]
     gen_vecs = tfidf[len(references):]
     cosine_similarities = cosine_similarity(ref_vecs, gen_vecs)
     return [cosine_similarities[i, i] for i in range(len(references))]
 
-def compute_bertscore(references, generations):
-    results = bertscore.compute(predictions=generations, references=references, lang="en")
+def compute_bertscore(references, generated):
+    results = bertscore.compute(predictions=generated, references=references, lang="en")
     return results["f1"]
 
-def compute_word_overlap(references, generations):
+def compute_word_overlap(references, generated):
     scores = []
-    for ref, gen in zip(references, generations):
+    for ref, gen in zip(references, generated):
         ref_tokens = set(tokenizer.tokenize(ref.lower()))
         gen_tokens = set(tokenizer.tokenize(gen.lower()))
         if not ref_tokens and not gen_tokens:
@@ -41,17 +41,17 @@ def compute_word_overlap(references, generations):
 
 def evaluate(data):
     references = [item["reference"] for item in data]
-    generations = [item["generated"] for item in data]
+    generated = [item["generated"] for item in data]
 
 
     print("Calculating cosine similarity...")
-    cosine_scores = compute_cosine_similarity(references, generations)
+    cosine_scores = compute_cosine_similarity(references, generated)
 
     print("Calculating BERTScore...")
-    bert_scores = compute_bertscore(references, generations)
+    bert_scores = compute_bertscore(references, generated)
 
     print("Calculating word overlap...")
-    overlap_scores = compute_word_overlap(references, generations)
+    overlap_scores = compute_word_overlap(references, generated)
 
     results = []
     for i in range(len(data)):

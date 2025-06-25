@@ -23,5 +23,80 @@
     "question": "Topics Covered in This Physics Textbook",
     "reference": "The text explores the origins of physics from ancient philosophy to Newtonian mechanics, introduces measurement systems, and discusses accuracy and scientific limitations.",
     "generated": "This physics text covers foundational topics such as Newton’s laws, scientific measurement, and the historical evolution of physics as a discipline."
+  } ,
+  {
+    "question": "What is the focus of normative political science?",
+    "reference": "It focuses on what should be, emphasizing values, ideals, and moral judgments.",
+    "generated":"the meaning, purposes, and goals of politics"
+  },
+  {
+    "question": "What character traits are emphasized by virtue-based political science?",
+    "reference": "Traits like bravery, integrity, humility, and kindness.",
+    "generated":"bravery, integrity, humility, and kindness"
+  },
+  {
+    "question": "What is empirical political science based on?",
+    "reference": "It is based on facts and evidence, focusing on describing and predicting real-world politics.",
+    "generated":"facts and evidence"
+  },
+  {
+    "question": "How are facts treated in empirical political science?",
+    "reference": "Facts are assumed to exist and are verified through evidence, though they may be disputed.",
+    "generated":"d."
+  },
+  {
+    "question": "What is motivated reasoning in the context of politics?",
+    "reference": "It is when people form conclusions first and then look for evidence to support them.",
+    "generated":"a form of bias that leads individuals to arrive at conclusions that they want to believe in rather than to scrutinize the evidence neutrally"
+  },
+  {
+    "question": "Why did Big Tobacco deny the health risks of nicotine?",
+    "reference": "Because admitting the truth would have hurt their profits.",
+    "generated":"to admit them would have put their profits at risk"
+  },
+  {
+    "question": "What does empirical political science avoid making?",
+    "reference": "Moral judgments or normative claims about what should be.",
+    "generated":" It is not always easy to determine what the facts are, in part because political action can be so complex and difficult to observe. A key outcome of empirical research is generalizations"
+  },
+  {
+    "question": "What is a generalization in political science?",
+    "reference": "A statement based on typical or average patterns, not on individual cases.",
+    "generated":"statements about political behavior that are typically true or are correct in general even if not for every individual or each event"
+  },
+  {
+    "question": "How do stereotypes differ from generalizations?",
+    "reference": "Stereotypes wrongly apply group traits to individuals, while generalizations describe group-level trends.",
+    "generated":"stereotypes are specific"
+  },
+  {
+    "question": "Why is ceteris paribus important in scientific reasoning?",
+    "reference": "It assumes all other variables are equal to isolate the effect of one variable.",
+    "generated":"the likeliest order of events is probably the simplest shortest path"
+  },
+  {
+    "question": "Why can predictions in political science be unreliable?",
+    "reference": "Because real-life political behavior is influenced by many unpredictable factors.",
+    "generated":"imperfect information"
+  },
+  {
+    "question": "What scientific method is shared between political science and biology?",
+    "reference": "The use of data to test hypotheses and build evidence-based conclusions.",
+    "generated":"the scientific method"
+  },
+  {
+    "question": "What kind of elections generate data useful for empirical political science?",
+    "reference": "Regular elections like U.S. congressional elections.",
+    "generated":"United States elections"
+  },
+  {
+    "question": "What example illustrates empirical uncertainty in international politics?",
+    "reference": "Whether Russian interference affects U.S. election outcomes.",
+     "generated":"The Cuban Missile Crisis"
+  },
+  {
+    "question": "Who was the first woman and person of color to serve as U.S. Vice President?",
+    "reference": "Kamala Harris.",
+    "generated": "Kamala Harris."
   }
 ]

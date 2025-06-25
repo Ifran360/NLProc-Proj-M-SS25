@@ -1,32 +1,122 @@
 [
   {
     "id": "The Veil Nebula and Its Cosmic Significance",
-    "cosine_similarity": 0.4161509822457411,
+    "cosine_similarity": 0.44660985482883886,
     "bertscore": 0.9186238050460815,
     "word_overlap": 0.3673469387755102
   },
   {
     "id": "The Role of Physics in Everyday Life and Technology",
-    "cosine_similarity": 0.11623680161956196,
+    "cosine_similarity": 0.1422468811717131,
     "bertscore": 0.882142961025238,
     "word_overlap": 0.1111111111111111
   },
   {
     "id": "The Invention and Impact of the MOSFET",
-    "cosine_similarity": 0.37529542803826343,
+    "cosine_similarity": 0.39960106343119856,
     "bertscore": 0.8916443586349487,
     "word_overlap": 0.3170731707317073
   },
   {
     "id": "Physics in Various Professions and Careers",
-    "cosine_similarity": 0.0809748368110434,
+    "cosine_similarity": 0.10123075560468087,
     "bertscore": 0.8894122838973999,
     "word_overlap": 0.11904761904761904
   },
   {
     "id": "Topics Covered in This Physics Textbook",
-    "cosine_similarity": 0.23418156125035738,
+    "cosine_similarity": 0.252524048095299,
     "bertscore": 0.9150128960609436,
     "word_overlap": 0.25
+  },
+  {
+    "id": "What is the focus of normative political science?",
+    "cosine_similarity": 0.027329109326047273,
+    "bertscore": 0.8762357234954834,
+    "word_overlap": 0.1
+  },
+  {
+    "id": "What character traits are emphasized by virtue-based political science?",
+    "cosine_similarity": 0.8414475519750906,
+    "bertscore": 0.9257981777191162,
+    "word_overlap": 0.6666666666666666
+  },
+  {
+    "id": "What is empirical political science based on?",
+    "cosine_similarity": 0.3847578318225142,
+    "bertscore": 0.8473566174507141,
+    "word_overlap": 0.1875
+  },
+  {
+    "id": "How are facts treated in empirical political science?",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8620356917381287,
+    "word_overlap": 0.058823529411764705
+  },
+  {
+    "id": "What is motivated reasoning in the context of politics?",
+    "cosine_similarity": 0.19001813251320607,
+    "bertscore": 0.8746403455734253,
+    "word_overlap": 0.12121212121212122
+  },
+  {
+    "id": "Why did Big Tobacco deny the health risks of nicotine?",
+    "cosine_similarity": 0.42532027398302114,
+    "bertscore": 0.922910749912262,
+    "word_overlap": 0.25
+  },
+  {
+    "id": "What does empirical political science avoid making?",
+    "cosine_similarity": 0.09998037955746863,
+    "bertscore": 0.8416674137115479,
+    "word_overlap": 0.07692307692307693
+  },
+  {
+    "id": "What is a generalization in political science?",
+    "cosine_similarity": 0.1978009524642045,
+    "bertscore": 0.8586618304252625,
+    "word_overlap": 0.1
+  },
+  {
+    "id": "How do stereotypes differ from generalizations?",
+    "cosine_similarity": 0.14403902567144558,
+    "bertscore": 0.8208335638046265,
+    "word_overlap": 0.058823529411764705
+  },
+  {
+    "id": "Why is ceteris paribus important in scientific reasoning?",
+    "cosine_similarity": 0.07582789112698736,
+    "bertscore": 0.8449952006340027,
+    "word_overlap": 0.08695652173913043
+  },
+  {
+    "id": "Why can predictions in political science be unreliable?",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8217641115188599,
+    "word_overlap": 0.0
+  },
+  {
+    "id": "What scientific method is shared between political science and biology?",
+    "cosine_similarity": 0.058829655049317676,
+    "bertscore": 0.8415440320968628,
+    "word_overlap": 0.0625
+  },
+  {
+    "id": "What kind of elections generate data useful for empirical political science?",
+    "cosine_similarity": 0.3995986884689998,
+    "bertscore": 0.8955622315406799,
+    "word_overlap": 0.1111111111111111
+  },
+  {
+    "id": "What example illustrates empirical uncertainty in international politics?",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8477734327316284,
+    "word_overlap": 0.0
+  },
+  {
+    "id": "Who was the first woman and person of color to serve as U.S. Vice President?",
+    "cosine_similarity": 1.0000000000000002,
+    "bertscore": 0.9999998807907104,
+    "word_overlap": 1.0
   }
 ]
