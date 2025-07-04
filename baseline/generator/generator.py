@@ -38,9 +38,9 @@ def parse_mcq_input(user_input):
 
 class Generator:
     def __init__(self):
-        # flan-t5 for QA and summarization
+        # flan-t5 for summarization
         self.t5_pipeline = pipeline("text2text-generation", model="google/flan-t5-large", device=-1)
-        # llama.cpp for MCQs
+        # llama.cpp for QA and MCQs
         with suppress_stdout_stderr():
             self.llm = Llama(model_path="D:/Softwares/LLAMA/TheBloke/CapybaraHermes-2.5-Mistral-7B-GGUF/capybarahermes-2.5-mistral-7b.Q4_K_S.gguf",n_ctx=2048, n_threads=4)
 
@@ -70,7 +70,7 @@ class Generator:
             return context_text
 
     def generate_answer(self, prompt, task_type):
-        # Defensive checks
+        # Checking if prompt is string or empty
         if not isinstance(prompt, str):
             raise TypeError(f"Prompt must be a string, got {type(prompt)}")
         if not prompt.strip():

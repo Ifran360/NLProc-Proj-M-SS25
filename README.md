@@ -76,10 +76,10 @@ python --version
 ```bash
 pip install -r requirements.txt
 ```
-### 1. Install LLama(CapybaraHermes-2.5-Mistral-7B-GGUF) 
+### 2. Install LLama(CapybaraHermes-2.5-Mistral-7B-GGUF) 
 ```bash
 Download from https://huggingface.co/TheBloke and place in Local folder and then in Generator.py add the path like this:
-self.llm = Llama(model_path="PATH",n_ctx=Contex_Length, n_threads=4)
+self.llm = Llama(model_path="LOCAL_PATH",n_ctx=Contex_Length, n_threads=4)
 ```
 
 ### 3. Start the Interactive Pipeline
