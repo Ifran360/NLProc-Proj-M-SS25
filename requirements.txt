@@ -1,6 +1,8 @@
 openai 
+torch --index-url https://download.pytorch.org/whl/cpu
 sentence-transformers 
 faiss-cpu 
+rank_bm25
 hf_xet 
 sentencepiece
 pymupdf
@@ -8,3 +10,5 @@ bert-score
 scikit-learn
 nltk
 evaluate
+transformers
+llama-cpp-python

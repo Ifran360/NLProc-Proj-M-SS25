@@ -6,12 +6,15 @@ This project implements a modular and extensible NLP pipeline capable of:
 - Text Summarization  
 - Multiple-Choice Question (MCQ) Generation  
 
-Using:
+**Key Technologies:**
 
-- FAISS for fast vector-based document retrieval  
-- SentenceTransformers for dense embeddings  
-- Transformers (`flan-t5-large`) for generative output  
+- **FAISS** for fast vector-based document retrieval  
+- **SentenceTransformers** for dense embeddings  
+- **Transformers (`flan-t5-large`)** for generative output (QA, Summarization)  
+- **llama.cpp** with **CapybaraHermes-2.5-Mistral-7B-GGUF** for MCQ answering  
+- **BM25** for lexical retrieval  
 - `.txt` and `.pdf` documents as the knowledge base  
+
 
 ---
 
@@ -60,10 +63,10 @@ python --version
 
 ### 3. Multi-Task Interactive Pipeline
 - On launch, users specify a task:
-  - `qa`: Answer questions  
-  - `summarize`: Summarize document content  
-  - `mcq`: Generate multiple-choice questions  
-- Relevant chunks are retrieved and fed into a prompt for `flan-t5-large`  
+  - `qa`: Answer questions using **Llama.cpp (CapybaraHermes-2.5-Mistral-7B-GGUF)**
+  - `summarize`: Summarize document content  using **Flan-T5**
+  - `mcq`: Generate multiple-choice questions  using **Llama.cpp (CapybaraHermes-2.5-Mistral-7B-GGUF)**
+-  Relevant chunks are retrieved (hybrid: BM25 + FAISS) and fed into a prompt for the selected model  
 
 ---
 
@@ -73,8 +76,13 @@ python --version
 ```bash
 pip install -r requirements.txt
 ```
+### 1. Install LLama(CapybaraHermes-2.5-Mistral-7B-GGUF) 
+```bash
+Download from https://huggingface.co/TheBloke and place in Local folder and then in Generator.py add the path like this:
+self.llm = Llama(model_path="PATH",n_ctx=Contex_Length, n_threads=4)
+```
 
-### 2. Start the Interactive Pipeline
+### 3. Start the Interactive Pipeline
 ```bash
 cd baseline
 python pipeline.py
@@ -83,7 +91,7 @@ python pipeline.py
 You will be prompted like this:
 ```
 Task Type [qa/summarize/mcq]: summarize
-Prompt: Summarize the story of Matilda
+Prompt: Summarize The Role of Physics in Everyday Life and Technolog
 ```
 
 ---
@@ -102,9 +110,9 @@ You can evaluate the quality of generated summaries against reference summaries 
 ```json
 [
   {
-    "question": "What is the Hundred Acre Wood?",
-    "reference": "The Hundred Acre Wood is the fictional forest home of Winnie-the-Pooh.",
-    "generated": "It is the place where Winnie-the-Pooh and his friends live."
+    "question": "The Role of Physics in Everyday Life and Technology",
+    "reference": "Physics influences everyday life through technologies like smartphones, appliances, and transportation systems. It also underpins careers in healthcare, engineering, aviation, and more by explaining forces, motion, and energy use.",
+    "generated": "From electronics to transportation and medical tools, physics is fundamental to daily technology and professional practices, impacting how we live and work."
   }
 ]
 ```
@@ -195,10 +203,13 @@ All files in `baseline/data/` are children's literature in `.txt` or `.pdf` form
 - ConceptsofBiology-WEB-19-602
 - Introduction_to_Political_Science_-_WEB-19-549
 - Secondary - 2018 - Class - 7 - English 7 BV PDF Web 
-
 ---
 
 ## Authors
 
 Developed by **Team Triple Trouble**  
 University of Bamberg — NLP Project (SS2025)
+
+
+self.embeddings = self.model.encode([d["text"] for d in self.documents], show_progress_bar=False)
+        print("Load complete.")

@@ -1,49 +1,49 @@
 [
   {
     "id": "The Veil Nebula and Its Cosmic Significance",
-    "cosine_similarity": 0.44660985482883886,
+    "cosine_similarity": 0.44701141458173566,
     "bertscore": 0.9186238050460815,
     "word_overlap": 0.3673469387755102
   },
   {
     "id": "The Role of Physics in Everyday Life and Technology",
-    "cosine_similarity": 0.1422468811717131,
+    "cosine_similarity": 0.1465644193357542,
     "bertscore": 0.882142961025238,
     "word_overlap": 0.1111111111111111
   },
   {
     "id": "The Invention and Impact of the MOSFET",
-    "cosine_similarity": 0.39960106343119856,
+    "cosine_similarity": 0.4008419649210755,
     "bertscore": 0.8916443586349487,
     "word_overlap": 0.3170731707317073
   },
   {
     "id": "Physics in Various Professions and Careers",
-    "cosine_similarity": 0.10123075560468087,
+    "cosine_similarity": 0.10235536502562752,
     "bertscore": 0.8894122838973999,
     "word_overlap": 0.11904761904761904
   },
   {
     "id": "Topics Covered in This Physics Textbook",
-    "cosine_similarity": 0.252524048095299,
-    "bertscore": 0.9150128960609436,
-    "word_overlap": 0.25
+    "cosine_similarity": 0.12620105547581909,
+    "bertscore": 0.8919358849525452,
+    "word_overlap": 0.16666666666666666
   },
   {
     "id": "What is the focus of normative political science?",
-    "cosine_similarity": 0.027329109326047273,
+    "cosine_similarity": 0.028900654401692864,
     "bertscore": 0.8762357234954834,
     "word_overlap": 0.1
   },
   {
     "id": "What character traits are emphasized by virtue-based political science?",
-    "cosine_similarity": 0.8414475519750906,
+    "cosine_similarity": 0.84181536713666,
     "bertscore": 0.9257981777191162,
     "word_overlap": 0.6666666666666666
   },
   {
     "id": "What is empirical political science based on?",
-    "cosine_similarity": 0.3847578318225142,
+    "cosine_similarity": 0.3884901959683015,
     "bertscore": 0.8473566174507141,
     "word_overlap": 0.1875
   },
@@ -55,19 +55,19 @@
   },
   {
     "id": "What is motivated reasoning in the context of politics?",
-    "cosine_similarity": 0.19001813251320607,
+    "cosine_similarity": 0.18769466010887778,
     "bertscore": 0.8746403455734253,
     "word_overlap": 0.12121212121212122
   },
   {
     "id": "Why did Big Tobacco deny the health risks of nicotine?",
-    "cosine_similarity": 0.42532027398302114,
+    "cosine_similarity": 0.42573459993517315,
     "bertscore": 0.922910749912262,
     "word_overlap": 0.25
   },
   {
     "id": "What does empirical political science avoid making?",
-    "cosine_similarity": 0.09998037955746863,
+    "cosine_similarity": 0.10033627427388324,
     "bertscore": 0.8416674137115479,
     "word_overlap": 0.07692307692307693
   },
@@ -79,13 +79,13 @@
   },
   {
     "id": "How do stereotypes differ from generalizations?",
-    "cosine_similarity": 0.14403902567144558,
+    "cosine_similarity": 0.14412327020130347,
     "bertscore": 0.8208335638046265,
     "word_overlap": 0.058823529411764705
   },
   {
     "id": "Why is ceteris paribus important in scientific reasoning?",
-    "cosine_similarity": 0.07582789112698736,
+    "cosine_similarity": 0.07600834749050915,
     "bertscore": 0.8449952006340027,
     "word_overlap": 0.08695652173913043
   },
@@ -97,7 +97,7 @@
   },
   {
     "id": "What scientific method is shared between political science and biology?",
-    "cosine_similarity": 0.058829655049317676,
+    "cosine_similarity": 0.05703039080338349,
     "bertscore": 0.8415440320968628,
     "word_overlap": 0.0625
   },

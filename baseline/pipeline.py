@@ -1,15 +1,11 @@
 import os
-# Prevent multiprocessing-related crashes on macOS
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"]="1"
 import json
 from datetime import datetime
 from retriever.retriever import Retriever
 from generator.generator import Generator
-from retriever.utils import extract_text_from_pdf  # Ensure this exists or define similarly
+from retriever.utils import extract_text_from_pdf
 
-# Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INDEX_DIR = os.path.join(BASE_DIR, "retriever_index")
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -31,19 +27,14 @@ def load_documents(folder_path):
             text = extract_text_from_pdf(file_path)
         else:
             continue
-
-        if not text.strip():
-            continue
-
-        doc_id = os.path.splitext(filename)[0].replace(" ", "_")
-        documents.append({"id": doc_id, "text": text})
-
+        if text.strip():
+            doc_id = os.path.splitext(filename)[0].replace(" ", "_")
+            documents.append({"id": doc_id, "text": text})
     return documents
 
-def log_result(question, retrieved_chunks, prompt, answer, task_type="qa", group_id="Team Triple Trouble"):
+def log_result(question, retrieved_chunks, prompt, answer, task_type="qa"):
     log_entry = {
         "timestamp": datetime.now().isoformat(),
-        "group_id": group_id,
         "task_type": task_type,
         "question": question,
         "retrieved_chunks": retrieved_chunks,
@@ -52,9 +43,6 @@ def log_result(question, retrieved_chunks, prompt, answer, task_type="qa", group
     }
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(json.dumps(log_entry) + "\n")
-
-def get_doc_id_from_chunk_id(chunk_id: str) -> str:
-    return chunk_id.split("_chunk_")[0]
 
 def main():
     ensure_dirs()
@@ -80,63 +68,43 @@ def main():
                 return doc_id
         return None
 
-    print("\nReady! Type 'exit' anytime to quit.\n")
+    print("\nReady! Type 'exit' anytime.\n")
 
     while True:
         try:
             task_type = input("Task Type [qa/summarize/mcq]: ").strip().lower()
-            if task_type == "exit":
-                print("Exiting...")
-                break
+            if task_type == "exit": break
             if task_type not in {"qa", "summarize", "mcq"}:
-                print("Invalid task type. Please enter 'qa', 'summarize', or 'mcq'.")
-                continue
+                print("Invalid. Choose qa, summarize, or mcq."); continue
 
             query_text = input("Prompt: ").strip()
-            if query_text.lower() == "exit":
-                print("Exiting...")
-                break
+            if query_text.lower() == "exit": break
             if not query_text:
-                print("Empty prompt. Please enter a valid input.")
-                continue
+                print("Empty prompt. Try again."); continue
 
-            k = 6 if task_type == "summarize" else 5
-            retrieved = retriever.query(query_text, k=k)
-
-            relevant_doc_id = find_relevant_doc_id_in_prompt(query_text)
-            if relevant_doc_id:
-                retrieved = [
-                    chunk for chunk in retrieved
-                    if get_doc_id_from_chunk_id(chunk["chunk_id"]) == relevant_doc_id
-                ][:3]
-            else:
-                retrieved = retrieved[:3]
-
-            context_chunks = [chunk['text'] for chunk in retrieved]
+            k = 20 if task_type == "summarize" else 15
+            retrieved = retriever.hybrid_query(query_text, k=k)[:10]
+            context_chunks = [chunk["text"] for chunk in retrieved]
 
             if not context_chunks:
-                print("No relevant chunks found.")
-                continue
+                print("No relevant chunks found."); continue
 
             if task_type == "summarize":
-                answer = generator.summarize_chunks(context_chunks)
-                prompt = generator.build_prompt(context_chunks, task_type="summarize")
+                prompt = generator.build_prompt(context_chunks,question=query_text, task_type="summarize")
+                answer = generator.summarize_chunks(context_chunks,question=query_text)
             else:
                 prompt = generator.build_prompt(context_chunks, question=query_text, task_type=task_type)
-                answer = generator.generate_answer(prompt)
+                answer = generator.generate_answer(prompt,task_type)
 
             print("\nTop Retrieved Chunks:")
             for chunk in retrieved:
-                print(f"- {chunk['chunk_id']} (Distance: {chunk['distance']:.4f})")
-                print(f"  Text: {chunk['text']}\n")
+                print(f"- {chunk['chunk_id']} (Score: {chunk['distance']:.4f})\n  {chunk['text'][:200]}...\n")
+            print(f"\nGenerated Answer:\n{answer}\n")
 
-            print(f"Generated Answer:\n{answer}\n")
-
-            log_result(query_text, context_chunks, prompt, answer, task_type=task_type)
+            log_result(query_text, context_chunks, prompt, answer, task_type)
 
         except (KeyboardInterrupt, EOFError):
-            print("\nExiting gracefully.")
-            break
+            print("\nExiting gracefully."); break
 
 if __name__ == "__main__":
     main()
