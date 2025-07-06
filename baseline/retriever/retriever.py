@@ -70,7 +70,7 @@ class Retriever:
         print("Initializing BM25 model...")
         self.bm25_model = BM25Okapi(self.tokenized_corpus)
         print("Encoding embeddings...")
-        self.embeddings = self.model.encode([d["text"] for d in self.documents], show_progress_bar=True)
+        self.embeddings = None
         print("Load complete.")  
 
     def query_faiss(self, query, k=5):

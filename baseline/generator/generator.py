@@ -51,7 +51,7 @@ class Generator:
         if task_type == "qa":
              return (
                 f"### Instruction:\n"
-                f"Given the following context, answer the question.\n\n"
+                f"Given the following context, precisely answer the question.\n\n"
                 f"### Context:\n{context_text}\n\n"
                 f"### Question:\n{question}\n\n"
                 f"### Answer:\n"
@@ -89,10 +89,9 @@ class Generator:
             max_context = 512
             if len(prompt_tokens) > max_context:
                 prompt_tokens = prompt_tokens_list[-max_context:]
-                prompt = self.llm.detokenize(prompt_tokens).decode("utf-8") 
 
             with suppress_stdout_stderr():
-                output = self.llm(prompt, max_tokens=100, stop=["\n", "</s>"])
+                output = self.llm.create_completion(prompt_tokens, max_tokens=100, stop=["</s>"])
 
             return output['choices'][0]['text'].strip()
 
