@@ -3,6 +3,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"]="1"
 import json
+import re
 from datetime import datetime
 from retriever.retriever import Retriever
 from generator.generator import Generator
@@ -17,6 +18,17 @@ LOG_FILE = os.path.join(LOG_PATH, "log.jsonl")
 def ensure_dirs():
     os.makedirs(INDEX_DIR, exist_ok=True)
     os.makedirs(LOG_PATH, exist_ok=True)
+
+def is_valid_prompt(prompt: str, min_words: int = 3) -> bool:
+        # Reject if prompt is too short, non-alphabetic, or lacks any real words
+        if not prompt or len(prompt.strip()) == 0:
+            return False
+        if len(re.findall(r'[a-zA-Z]', prompt)) < min_words:
+            return False
+        if re.fullmatch(r"[^a-zA-Z0-9]+", prompt):  # only symbols
+            return False
+        return True
+
 
 def load_documents(folder_path):
     documents = []
@@ -80,6 +92,9 @@ def main():
                 print("Invalid. Choose qa, summarize, or mcq."); continue
 
             query_text = input("Prompt: ").strip()
+            if not is_valid_prompt(query_text):
+                print("Invalid or unclear question.")
+                continue
             if query_text.lower() == "exit": break
             if not query_text:
                 print("Empty prompt. Try again."); continue
@@ -96,7 +111,7 @@ def main():
                 answer = generator.summarize_chunks(context_chunks,question=query_text)
             else:
                 prompt = generator.build_prompt(context_chunks, question=query_text, task_type=task_type)
-                answer = generator.generate_answer(prompt,task_type)
+                answer = generator.generate_answer(prompt,task_type, context_chunks)
 
             print("\nTop Retrieved Chunks:")
             for chunk in retrieved:

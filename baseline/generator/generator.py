@@ -35,6 +35,26 @@ def parse_mcq_input(user_input):
             "C": c.strip().capitalize(),
             "D": d.strip().capitalize()
         }
+def is_answer_grounded(answer, context_chunks, threshold=0.2):
+        """
+        Checks if the answer overlaps with the context chunks.
+        Uses simple word overlap ratio as a proxy for grounding.
+        """
+        answer_words = set(re.findall(r"\w+", answer.lower()))
+        context_text = " ".join(context_chunks).lower()
+        context_words = set(re.findall(r"\w+", context_text))
+
+        if not answer_words:
+            return False
+
+        overlap = answer_words & context_words
+        overlap_ratio = len(overlap) / len(answer_words)
+
+        return overlap_ratio >= threshold
+
+
+
+
 
 class Generator:
     def __init__(self):
@@ -44,7 +64,6 @@ class Generator:
         with suppress_stdout_stderr():
             self.llm = Llama(model_path="D:/Softwares/LLAMA/TheBloke/CapybaraHermes-2.5-Mistral-7B-GGUF/capybarahermes-2.5-mistral-7b.Q4_K_S.gguf",n_ctx=2048, n_threads=4)
 
-    
 
     def build_prompt(self, context_chunks, question, task_type):
         context_text = " ".join(context_chunks)
@@ -69,12 +88,14 @@ class Generator:
         else:
             return context_text
 
-    def generate_answer(self, prompt, task_type):
+    def generate_answer(self, prompt, task_type, context_chunks):
         # Checking if prompt is string or empty
         if not isinstance(prompt, str):
             raise TypeError(f"Prompt must be a string, got {type(prompt)}")
         if not prompt.strip():
             raise ValueError("Prompt is empty.")
+
+        fallback_response = "I am unable to answer this question. Do you want to ask anything else?"
 
         if task_type == "summarize":
             result = self.t5_pipeline(prompt, max_length=256, truncation=True)
@@ -91,9 +112,24 @@ class Generator:
                 prompt_tokens = prompt_tokens_list[-max_context:]
 
             with suppress_stdout_stderr():
-                output = self.llm.create_completion(prompt_tokens, max_tokens=100, stop=["</s>"])
+                output = self.llm.create_completion(prompt_tokens, max_tokens=200, stop=["</s>"])
+            
+            answer = output['choices'][0]['text'].strip()
 
-            return output['choices'][0]['text'].strip()
+            if not answer or answer in {".", "..."} or len(answer) < 2:
+                return fallback_response
+            if answer.lower() in {
+                "I am unable to answer this question,", 
+                "i don't understand", 
+                "sorry, i don't know", 
+                "i cannot answer that"
+            }:
+                return fallback_response
+            # Use context grounding check
+            if not is_answer_grounded(answer, context_chunks):
+                return fallback_response
+
+            return answer
 
 
         elif task_type == "mcq":
