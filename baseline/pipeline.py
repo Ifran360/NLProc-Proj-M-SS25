@@ -1,7 +1,8 @@
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"]="1"
+os.environ["MKL_NUM_THREADS"] = "1"
+
 import json
 import re
 from datetime import datetime
@@ -20,15 +21,13 @@ def ensure_dirs():
     os.makedirs(LOG_PATH, exist_ok=True)
 
 def is_valid_prompt(prompt: str, min_words: int = 3) -> bool:
-        # Reject if prompt is too short, non-alphabetic, or lacks any real words
-        if not prompt or len(prompt.strip()) == 0:
-            return False
-        if len(re.findall(r'[a-zA-Z]', prompt)) < min_words:
-            return False
-        if re.fullmatch(r"[^a-zA-Z0-9]+", prompt):  # only symbols
-            return False
-        return True
-
+    if not prompt or len(prompt.strip()) == 0:
+        return False
+    if len(re.findall(r'[a-zA-Z]', prompt)) < min_words:
+        return False
+    if re.fullmatch(r"[^a-zA-Z0-9]+", prompt):
+        return False
+    return True
 
 def load_documents(folder_path):
     documents = []
@@ -71,10 +70,10 @@ def main():
     else:
         print("Index not found. Indexing documents from data/ ...")
         documents = load_documents(DATA_DIR)
-        retriever.add_documents(documents)
+        retriever.add_documents(documents, chunk_size=100, stride=50)
         retriever.save(INDEX_DIR)
 
-    known_doc_ids = set(cid.split("_chunk_")[0] for cid in retriever.chunk_ids)
+    known_doc_ids = set(cid.split("_chunk")[0] for cid in retriever.chunk_ids)
 
     def find_relevant_doc_id_in_prompt(prompt: str) -> str:
         for doc_id in known_doc_ids:
@@ -96,26 +95,25 @@ def main():
                 print("Invalid or unclear question.")
                 continue
             if query_text.lower() == "exit": break
-            if not query_text:
-                print("Empty prompt. Try again."); continue
 
-            k = 20 if task_type == "summarize" else 15
-            retrieved = retriever.hybrid_query(query_text, k=k)[:10]
+            k = 10 if task_type == "summarize" else 8
+            retrieved = retriever.hybrid_query(query_text, k=k, alpha=0.5, rerank=True)[:5]
             context_chunks = [chunk["text"] for chunk in retrieved]
 
             if not context_chunks:
                 print("No relevant chunks found."); continue
 
             if task_type == "summarize":
-                prompt = generator.build_prompt(context_chunks,question=query_text, task_type="summarize")
-                answer = generator.summarize_chunks(context_chunks,question=query_text)
+                prompt = generator.build_prompt(context_chunks, question=query_text, task_type="summarize")
+                answer = generator.summarize_chunks(context_chunks, question=query_text)
             else:
                 prompt = generator.build_prompt(context_chunks, question=query_text, task_type=task_type)
-                answer = generator.generate_answer(prompt,task_type, context_chunks)
+                answer = generator.generate_answer(prompt, task_type, context_chunks)
 
             print("\nTop Retrieved Chunks:")
             for chunk in retrieved:
-                print(f"- {chunk['chunk_id']} (Score: {chunk['distance']:.4f})\n  {chunk['text'][:200]}...\n")
+                print(f"- {chunk['chunk_id']} (Score: {chunk['score']:.4f})\n  {chunk['text']}...\n")
+
             print(f"\nGenerated Answer:\n{answer}\n")
 
             log_result(query_text, context_chunks, prompt, answer, task_type)
