@@ -1,15 +1,15 @@
 import json
 import argparse
+import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import evaluate
 from nltk.tokenize import WordPunctTokenizer
+import os
 
-# Use WordPunctTokenizer to avoid issues with punkt_tab
+# Initialize tokenizer and BERTScore
 tokenizer = WordPunctTokenizer()
-
-# Load evaluation metrics
 bertscore = evaluate.load("bertscore")
 
 def compute_cosine_similarity(references, generated):
@@ -40,9 +40,10 @@ def compute_word_overlap(references, generated):
     return scores
 
 def evaluate(data):
-    references = [item["reference"] for item in data]
-    generated = [item["generated"] for item in data]
-
+    references = data["Actual"].astype(str).tolist()
+    generated = data["Generated"].astype(str).tolist()
+    ids = data["Question"].astype(str).tolist()
+    type = data["Type"].astype(str).tolist()
 
     print("Calculating cosine similarity...")
     cosine_scores = compute_cosine_similarity(references, generated)
@@ -54,29 +55,43 @@ def evaluate(data):
     overlap_scores = compute_word_overlap(references, generated)
 
     results = []
-    for i in range(len(data)):
+    for i in range(len(ids)):
         results.append({
-            "id": data[i].get("question", f"sample_{i}"),
+            "question": ids[i],
+            "Type": type[i],
             "cosine_similarity": cosine_scores[i],
             "bertscore": bert_scores[i],
             "word_overlap": overlap_scores[i],
         })
 
-
     return results
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", type=str, required=True, help="Input JSON file with reference and generation.")
-    parser.add_argument("--output", type=str, required=True, help="Output JSON file with evaluation results.")
+    parser.add_argument("--input_excel", type=str, required=True, help="Path to Excel file with columns: question, generated, actual")
+    parser.add_argument("--output_json", type=str, default="results.json", help="Output JSON file (appends if exists)")
     args = parser.parse_args()
 
-    with open(args.input, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    # Read Excel
+    df = pd.read_excel(args.input_excel)
 
-    results = evaluate(data)
+    if not {"Question", "Reference","Generated", "Actual"}.issubset(df.columns):
+        raise ValueError("Excel file must contain columns: question, reference, generated, actual")
 
-    with open(args.output, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2)
+    # Evaluate
+    results = evaluate(df)
 
-    print(f"Saved results to {args.output}")
+    # Load existing JSON (if exists)
+    if os.path.exists(args.output_json):
+        with open(args.output_json, "r", encoding="utf-8") as f:
+            existing_data = json.load(f)
+    else:
+        existing_data = []
+
+    # Append and save
+    updated_data = existing_data + results
+
+    with open(args.output_json, "w", encoding="utf-8") as f:
+        json.dump(updated_data, f, indent=2)
+
+    print(f"Saved {len(results)} new evaluations to {args.output_json}")

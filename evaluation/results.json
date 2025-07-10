@@ -1,122 +1,625 @@
 [
   {
     "id": "The Veil Nebula and Its Cosmic Significance",
+    "Type": "summarize",
     "cosine_similarity": 0.44701141458173566,
     "bertscore": 0.9186238050460815,
     "word_overlap": 0.3673469387755102
   },
   {
     "id": "The Role of Physics in Everyday Life and Technology",
+    "Type": "summarize",
     "cosine_similarity": 0.1465644193357542,
     "bertscore": 0.882142961025238,
     "word_overlap": 0.1111111111111111
   },
   {
     "id": "The Invention and Impact of the MOSFET",
+    "Type": "summarize",
     "cosine_similarity": 0.4008419649210755,
     "bertscore": 0.8916443586349487,
     "word_overlap": 0.3170731707317073
   },
   {
     "id": "Physics in Various Professions and Careers",
+    "Type": "summarize",
     "cosine_similarity": 0.10235536502562752,
     "bertscore": 0.8894122838973999,
     "word_overlap": 0.11904761904761904
   },
   {
     "id": "Topics Covered in This Physics Textbook",
+    "Type": "summarize",
     "cosine_similarity": 0.12620105547581909,
     "bertscore": 0.8919358849525452,
     "word_overlap": 0.16666666666666666
   },
   {
     "id": "What is the focus of normative political science?",
+    "Type": "qa",
     "cosine_similarity": 0.028900654401692864,
     "bertscore": 0.8762357234954834,
     "word_overlap": 0.1
   },
   {
     "id": "What character traits are emphasized by virtue-based political science?",
+    "Type": "qa",
     "cosine_similarity": 0.84181536713666,
     "bertscore": 0.9257981777191162,
     "word_overlap": 0.6666666666666666
   },
   {
     "id": "What is empirical political science based on?",
+    "Type": "qa",
     "cosine_similarity": 0.3884901959683015,
     "bertscore": 0.8473566174507141,
     "word_overlap": 0.1875
   },
   {
     "id": "How are facts treated in empirical political science?",
+    "Type": "qa",
     "cosine_similarity": 0.0,
     "bertscore": 0.8620356917381287,
     "word_overlap": 0.058823529411764705
   },
   {
     "id": "What is motivated reasoning in the context of politics?",
+    "Type": "qa",
     "cosine_similarity": 0.18769466010887778,
     "bertscore": 0.8746403455734253,
     "word_overlap": 0.12121212121212122
   },
   {
     "id": "Why did Big Tobacco deny the health risks of nicotine?",
+    "Type": "qa",
     "cosine_similarity": 0.42573459993517315,
     "bertscore": 0.922910749912262,
     "word_overlap": 0.25
   },
   {
     "id": "What does empirical political science avoid making?",
+    "Type": "qa",
     "cosine_similarity": 0.10033627427388324,
     "bertscore": 0.8416674137115479,
     "word_overlap": 0.07692307692307693
   },
   {
     "id": "What is a generalization in political science?",
+    "Type": "qa",
     "cosine_similarity": 0.1978009524642045,
     "bertscore": 0.8586618304252625,
     "word_overlap": 0.1
   },
   {
     "id": "How do stereotypes differ from generalizations?",
+    "Type": "qa",
     "cosine_similarity": 0.14412327020130347,
     "bertscore": 0.8208335638046265,
     "word_overlap": 0.058823529411764705
   },
   {
     "id": "Why is ceteris paribus important in scientific reasoning?",
+    "Type": "qa",
     "cosine_similarity": 0.07600834749050915,
     "bertscore": 0.8449952006340027,
     "word_overlap": 0.08695652173913043
   },
   {
     "id": "Why can predictions in political science be unreliable?",
+    "Type": "qa",
     "cosine_similarity": 0.0,
     "bertscore": 0.8217641115188599,
     "word_overlap": 0.0
   },
   {
     "id": "What scientific method is shared between political science and biology?",
+    "Type": "qa",
     "cosine_similarity": 0.05703039080338349,
     "bertscore": 0.8415440320968628,
     "word_overlap": 0.0625
   },
   {
     "id": "What kind of elections generate data useful for empirical political science?",
+    "Type": "qa",
     "cosine_similarity": 0.3995986884689998,
     "bertscore": 0.8955622315406799,
     "word_overlap": 0.1111111111111111
   },
   {
     "id": "What example illustrates empirical uncertainty in international politics?",
+    "Type": "qa",
     "cosine_similarity": 0.0,
     "bertscore": 0.8477734327316284,
     "word_overlap": 0.0
   },
   {
     "id": "Who was the first woman and person of color to serve as U.S. Vice President?",
+    "Type": "qa",
     "cosine_similarity": 1.0000000000000002,
     "bertscore": 0.9999998807907104,
     "word_overlap": 1.0
+  },
+  {
+    "question": "What is the The cornerstone of discovering natural laws ?",
+    "Type": "qa",
+    "cosine_similarity": 0.5759838657234105,
+    "bertscore": 0.92947918176651,
+    "word_overlap": 0.34782608695652173
+  },
+  {
+    "question": "What is the aim of physics",
+    "Type": "qa",
+    "cosine_similarity": 0.3108960711276469,
+    "bertscore": 0.8371736407279968,
+    "word_overlap": 0.075
+  },
+  {
+    "question": "For the laws of classical physics to apply, what criteria must be met",
+    "Type": "qa",
+    "cosine_similarity": 0.7204066848091727,
+    "bertscore": 0.8977435231208801,
+    "word_overlap": 0.4777777777777778
+  },
+  {
+    "question": "Mordern Physics consists of two revolutionary theories what are they ?",
+    "Type": "qa",
+    "cosine_similarity": 0.7912171851270943,
+    "bertscore": 0.9108649492263794,
+    "word_overlap": 0.6
+  },
+  {
+    "question": "Measurements of physical quantities are expressed in terms of what ?",
+    "Type": "qa",
+    "cosine_similarity": 0.9471958569050161,
+    "bertscore": 0.9392330646514893,
+    "word_overlap": 0.8333333333333334
+  },
+  {
+    "question": "What are the two major systesms of units used in the world ?",
+    "Type": "qa",
+    "cosine_similarity": 0.5024743877292758,
+    "bertscore": 0.8484717607498169,
+    "word_overlap": 0.275
+  },
+  {
+    "question": "What is the SI unit for mass",
+    "Type": "qa",
+    "cosine_similarity": 1.0,
+    "bertscore": 1.0,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What was the purpose of firkin unit ?",
+    "Type": "qa",
+    "cosine_similarity": 0.3787925179827112,
+    "bertscore": 0.8720295429229736,
+    "word_overlap": 0.14285714285714285
+  },
+  {
+    "question": "What is the reason of  the diversity of life on Earth",
+    "Type": "qa",
+    "cosine_similarity": 0.43771422189186115,
+    "bertscore": 0.906387448310852,
+    "word_overlap": 0.2916666666666667
+  },
+  {
+    "question": "Can you tell me in one word what is the reason of the diversity of life on earth",
+    "Type": "qa",
+    "cosine_similarity": 1.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Kindly give me one word answer . How does politics resolve conflicts?",
+    "Type": "qa",
+    "cosine_similarity": 0.48106341531317276,
+    "bertscore": 0.8077769875526428,
+    "word_overlap": 0.2
+  },
+  {
+    "question": "How does politics resolve conflicts?",
+    "Type": "qa",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.7916418313980103,
+    "word_overlap": 0.0
+  },
+  {
+    "question": "From the book Introduction to political science page no 16 kindly give me the answer. How does the politics resolve conflicts ?",
+    "Type": "qa",
+    "cosine_similarity": 0.2550579149285566,
+    "bertscore": 0.8475812673568726,
+    "word_overlap": 0.15
+  },
+  {
+    "question": "nan",
+    "Type": "qa",
+    "cosine_similarity": 1.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "MCQ",
+    "Type": "qa",
+    "cosine_similarity": 1.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "All groups of living organisms share several key characteristics. Which of the following is not listed as one of these defining properties of life? a) Order b) Sensitivity or response to stimuli  C) Digestion d) Reproduction",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8378399610519409,
+    "word_overlap": 0.3333333333333333
+  },
+  {
+    "question": "According to biologists, what is the smallest fundamental unit of structure and function in living organisms? a) Organelle b) Atom c) Cell d) Molecule",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8129863142967224,
+    "word_overlap": 0.3333333333333333
+  },
+  {
+    "question": "Which of the following components is present in both prokaryotic and eukaryotic cells? a) Nucleus b) Mitochondrion c) Plasma membrane d) Membrane-bound organelles",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8398000001907349,
+    "word_overlap": 0.25
+  },
+  {
+    "question": "In the double-helix structure of DNA, which nitrogenous base always bonds with thymine? a) Guanine b) Cytosine c) Adenine d) Uraci",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9933424592018127,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Animals with bilateral symmetry typically develop how many embryonic germ layers? a) Two (diploblasts) b) Three (triploblasts) c) One (monoblasts) d) Four",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.824347198009491,
+    "word_overlap": 0.2
+  },
+  {
+    "question": "In the human digestive system, where does the majority of fat digestion take place? a) Mouth b) Stomach c) Small intestine d) Large intestine",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8382527828216553,
+    "word_overlap": 0.25
+  },
+  {
+    "question": "Which terrestrial biome is characterized by abundant water resources and is considered the most diverse terrestrial biome? a) Deserts b) Boreal Forests c) Savanna d) Tropical Rainforests",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8389831185340881,
+    "word_overlap": 0.25
+  },
+  {
+    "question": ".\nWhich class of biological macromolecules is key in the continuity of life, carrying the genetic blueprint of a cell and instructions for its functioning? a) Proteins b) Carbohydrates c) Lipids d) Nucleic acids",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8325629234313965,
+    "word_overlap": 0.25
+  },
+  {
+    "question": ".\nA suggested and testable explanation for an event or observation is called a/an: a) Scientific law b) Theory c) Hypothesis d) Prediction",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8290578722953796,
+    "word_overlap": 0.3333333333333333
+  },
+  {
+    "question": "In Mendel's monohybrid cross, when true-breeding parents with contrasting dominant and recessive traits are crossed (e.g., true-breeding pea plants with yellow seeds (dominant) with true-breeding pea plants with green seeds (recessive)), what phenotype will all of the F1 offspring exhibit? a) Only green seeds b) A mixture of yellow and green seeds c) Only yellow seeds d) A new, blended seed colour",
+    "Type": "mcq",
+    "cosine_similarity": 1.0000000000000002,
+    "bertscore": 0.968330442905426,
+    "word_overlap": 0.6666666666666666
+  },
+  {
+    "question": ".\nIn the human digestive system, where does the majority of fat digestion take place? a) Mouth b) Stomach c) Small intestine d) Large intestine",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8382527828216553,
+    "word_overlap": 0.25
+  },
+  {
+    "question": "nan",
+    "Type": "mcq",
+    "cosine_similarity": 1.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What refers to the relatively stable internal environment required to maintain life in organisms, despite external changes? a. Adaptation b. Reproduction c. Homeostasis d. Energy processing",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Which sequence accurately represents the hierarchy of biological organisation from the most fundamental unit of matter to a functional unit within a cell? a. Molecule, atom, organelle b. Atom, molecule, organelle c. Cell, tissue, organelle d. Organism, population, community",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9151760339736938,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Why is water considered essential to life by scientists when looking for life on other planets? a. It is known to be the only source of energy for primitive organisms. b. Its presence indicates the possibility of complex organic molecule formation. c. Water is essential to life. d. It can act as a universal catalyst for chemical reactions.",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Which class of macromolecules is primarily hydrophobic and serves as long-term energy storage and insulation? a. Carbohydrates b. Proteins c. Nucleic acids d. Lipids",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What is the smallest fundamental unit of structure and function in living organisms, a requirement that viruses do not meet? a. Tissue b. Organelle c. Macromolecule d. Cell",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Which characteristic differentiates prokaryotic cells from eukaryotic cells? a. Presence of cytoplasm b. Presence of DNA c. Presence of ribosomes d. Lack of a membrane-bound nucleus and other membrane-bound organelles",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Which eukaryotic organelle is known as the \"powerhouse of the cell\" and is responsible for ATP production through cellular respiration? a. Nucleus b. Ribosome c. Mitochondria d. Endoplasmic reticulum",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What is the passive process of transport where a single substance moves from an area of high concentration to an area of low concentration without expending energy? a. Active transport b. Osmosis c. Exocytosis d. Diffusion",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9994708299636841,
+    "word_overlap": 0.0
+  },
+  {
+    "question": "What are the metabolic pathways called that break down complex molecules into simpler ones, typically releasing energy? a. Anabolic pathways b. Catabolic pathways c. Bioenergetic pathways d. Synthesis pathways",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.000000238418579,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What molecule is referred to as the cell\u2019s primary energy currency, providing quick bursts of energy for cellular work? a. ADP b. NADH c. Glucose d. ATP",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": " What is the main role of enzymes in biochemical reactions within a cell? a. To provide the necessary activation energy. b. To change the products of a reaction. c. To lower activation energies and speed up reactions. d. To act as a source of genetic information",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What two products result from the process of photosynthesis? a. Water and carbon dioxide b. ATP and NADPH c. Glucose and oxygen d. Chlorophyll and light energy",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "In eukaryotic cells, the citric acid cycle and oxidative phosphorylation are key processes in cellular respiration. Where do these processes primarily take place? a. Cytoplasm b. Nucleus c. Ribosomes d. Mitochondria",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "The central dogma describes the flow of genetic information in cells. Which sequence correctly represents this flow? a. RNA to DNA to protein b. Protein to RNA to DNA c. DNA to RNA to protein d. RNA to protein to DNA",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What is the process of cell division in prokaryotes, which results in two genetically identical daughter cells? a. Mitosis b. Meiosis c. Binary fission d. Budding",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "A major evolutionary advantage of sexual reproduction over asexual reproduction is that it results in what? a. Faster reproduction rates. b. Less energy expenditure for mating. c. Greater variation in the offspring. d. Production of genetically identical clones",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "According to Mendel\u2019s law of dominance, in a heterozygous individual, how is the recessive allele expressed? a. It is expressed equally with the dominant allele. b. It is expressed only when both alleles are present. c. It contributes to a blended phenotype. d. It remains latent, but is transmitted to offspring",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.8571645617485046,
+    "word_overlap": 0.09090909090909091
+  },
+  {
+    "question": "Genetic engineering involves modifying an organism\u2019s DNA to achieve desirable traits. What is the most common method for achieving this? a. Selective breeding. b. Use of restriction enzymes to cut DNA fragments. c. Addition of foreign DNA in the form of recombinant DNA vectors. d. Polymerase Chain Reaction (PCR)",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "According to Darwin and Wallace, which principle is an inevitable outcome leading to natural selection? a. Organisms acquire traits during their lifetime that are then inherited by offspring. b. All energy transfers are completely efficient, promoting survival. c. Offspring vary among each other in regard to their characteristics and those variations are inherited. d. Populations inherently maintain constant allele frequencies. ",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "for what The universality of DNA as genetic material and the near universality of the genetic code are considered powerful evidence ? a. Convergent evolution. b. Genetic mutations as the sole source of variation. c. A common origin for all life on Earth. d. The process of speciation.",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "American microbiologist Carl Woese's pioneering work led to the grouping of all life on Earth into which three domains? a. Animals, Plants, Fungi b. Eukaryotes, Prokaryotes, Viruses c. Bacteria, Archaea, and Eukarya d. Protists, Fungi, Bacteria",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What term describes a microbial community that is held together by a gummy-textured matrix and grows attached to surfaces? a. Microbial mat b. Extremophile c. Pathogen d. Biofilm",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.998513400554657,
+    "word_overlap": 0.0
+  },
+  {
+    "question": " What is the rigid, complex polysaccharide that makes up the cell walls of fungi? a. Cellulose b. Peptidoglycan c. Chitin d. Glucan",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Which of the following is a common feature shared by all animals? a. Being able to perform photosynthesis. b. External digestion of food. c. Being heterotrophic, ingesting living or dead organic matter. d. Having a fixed, asymmetrical body plan.",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": " In animals, what processes are called thermoregulation and osmoregulation? a. Maintaining nutrient transport and response to stimuli. b. Maintaining homeostasis of temperature and water content, respectively. c. Regulating blood glucose levels and pH balance. d. Coordinating internal functions through regulatory mechanisms.",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.000000238418579,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "The anatomical arrangement where alveoli are in direct contact with capillaries in the lungs highlights the structural and functional relationship between which two systems? a. Digestive and Circulatory systems. b. Nervous and Endocrine systems. c. Musculoskeletal and Nervous systems. d. Respiratory and Circulatory systems",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "In an ecosystem, how do photoautotrophs primarily obtain their energy? a. By consuming other living organisms. b. By breaking down dead or decaying organic matter. c. By using chemical energy from inorganic molecules. d. By harnessing the Sun\u2019s solar energy and converting it to chemical energy",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What is the term for the cycling of minerals and nutrients (like carbon, nitrogen, and phosphorus) through the biotic (living) and abiotic (non-living) parts of the world? a. Biomagnification b. Trophic level exchange c. Biogeochemical cycle d. Ecosystem services",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "What are the two major abiotic factors that primarily determine the type of terrestrial biome in a given area? a. Elevation and geology b. Soil composition and sunlight availability c. Temperature and amount of precipitation d. Wind patterns and humidity.",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "A geographical area containing a high number of endemic species and a large percentage of degraded habitat, identified for focused conservation efforts, is known as a(n): a. Climax community b. Ecosystem diversity c. Biodiversity hotspot d. Species richness zone",
+    "Type": "mcq",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.9999999403953552,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "nan",
+    "Type": "nan",
+    "cosine_similarity": 1.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "nan",
+    "Type": "nan",
+    "cosine_similarity": 1.0,
+    "bertscore": 1.0000001192092896,
+    "word_overlap": 1.0
+  },
+  {
+    "question": "Summarize topic of average velocity",
+    "Type": "summarize",
+    "cosine_similarity": 0.46775582325611414,
+    "bertscore": 0.8164640665054321,
+    "word_overlap": 0.15384615384615385
+  },
+  {
+    "question": "Summarize topic of vector in two dimensions?",
+    "Type": "summarize",
+    "cosine_similarity": 0.43153439315372405,
+    "bertscore": 0.8801664710044861,
+    "word_overlap": 0.29850746268656714
+  },
+  {
+    "question": "Summarize topic of relative velocity?",
+    "Type": "summarize",
+    "cosine_similarity": 0.5646442880113537,
+    "bertscore": 0.8723039627075195,
+    "word_overlap": 0.27631578947368424
+  },
+  {
+    "question": "Summarize topic of Newton's first law of motion?",
+    "Type": "summarize",
+    "cosine_similarity": 0.45346745773742636,
+    "bertscore": 0.8893254995346069,
+    "word_overlap": 0.297029702970297
+  },
+  {
+    "question": "Summarize topic of Newton's third law of Motion?",
+    "Type": "summarize",
+    "cosine_similarity": 0.4560229034586817,
+    "bertscore": 0.854844331741333,
+    "word_overlap": 0.2980769230769231
+  },
+  {
+    "question": "Summarize topic of conversion of energy ?",
+    "Type": "summarize",
+    "cosine_similarity": 0.32583596696871675,
+    "bertscore": 0.8742640018463135,
+    "word_overlap": 0.2127659574468085
+  },
+  {
+    "question": "Summarize topic of work and energy transfer ?",
+    "Type": "summarize",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.7856886386871338,
+    "word_overlap": 0.0
+  },
+  {
+    "question": "Summarize topic of Spinal Column and Skull?",
+    "Type": "summarize",
+    "cosine_similarity": 0.0,
+    "bertscore": 0.7736458778381348,
+    "word_overlap": 0.015151515151515152
+  },
+  {
+    "question": "Summarize the topic of temperature?",
+    "Type": "summarize",
+    "cosine_similarity": 0.10707778356514094,
+    "bertscore": 0.8413707613945007,
+    "word_overlap": 0.08064516129032258
+  },
+  {
+    "question": "Summarize the topic of  the topic of Thermal Equilibrium and the Zeroth Law of Thermodynamics",
+    "Type": "summarize",
+    "cosine_similarity": 0.18048394541223609,
+    "bertscore": 0.8408061861991882,
+    "word_overlap": 0.10144927536231885
   }
 ]

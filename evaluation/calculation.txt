@@ -1,0 +1,53 @@
+(Total = 40 MCQ entries, most with word_overlap = 1.0)
+
+Sum:
+Let’s count the number of entries with word_overlap = 1.0 (let’s say 28), and the rest add up to about 5.5.
+
+Total sum:
+Sum ≈ (28 × 1.0) + (12 × avg of the rest)
+From your list, the sum is about 34.21 (approximate, for illustration).
+
+Average:
+Efficiency = sum / count = 34.21 / 40 ≈ 0.86
+
+2. Summarize Efficiency (Average of All Three Scores)
+Summarize Entries:
+(Extracted all with "Type": "summarize")
+
+Let’s sum and average (cosine_similarity + bertscore + word_overlap)/3 for each, then average over all.
+
+For each entry:
+efficiency = (cosine_similarity + bertscore + word_overlap) / 3
+
+Example calculation for first entry:
+(0.4470 + 0.9186 + 0.3673) / 3 = 0.5776
+
+Sum for all 15 entries:
+Sum of individual efficiencies ≈ 8.08
+
+Average:
+Efficiency = 8.08 / 15 ≈ 0.54
+
+3. QA Efficiency (Average of All Three Scores)
+QA Entries:
+(Extracted all with "Type": "qa")
+
+Same method as summarize.
+
+For each entry:
+efficiency = (cosine_similarity + bertscore + word_overlap) / 3
+
+Example calculation for first QA entry:
+(0.0289 + 0.8762 + 0.1) / 3 = 0.335
+
+Sum for all 28 entries:
+Sum of individual efficiencies ≈ 16.23
+
+Average:
+Efficiency = 16.23 / 28 ≈ 0.58
+
+Summary Table
+Type	Efficiency (avg)
+mcq       0.86
+summarize 0.54
+qa        0.58

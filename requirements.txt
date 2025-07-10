@@ -12,3 +12,4 @@ nltk
 evaluate
 transformers
 llama-cpp-python
+openpyxl
