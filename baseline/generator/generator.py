@@ -80,7 +80,13 @@ class Generator:
             )
 
         elif task_type == "summarize":
-            return f"Summarize this:\n{context_text}"
+            return (
+                f"### Instruction:\n"
+                f"Provide a overall summary of the following content related to '{question}'.\n"
+                f"Do not repeat the same sentence.\n\n"
+                f"### Context:\n{context_text}\n\n"
+                f"### Summary:"
+            )
         else:
             return context_text
 
@@ -91,7 +97,7 @@ class Generator:
         fallback_response = "I am unable to answer this question. Do you want to ask anything else?"
 
         if task_type == "summarize":
-            result = self.t5_pipeline(prompt, max_length=256, truncation=True)
+            result = self.t5_pipeline(prompt, max_length=512, min_length=100, truncation=True, num_beams=4,early_stopping=True, no_repeat_ngram_size=3)
             return result[0].get('generated_text') or str(result[0])
 
         elif task_type in {"qa", "mcq"}:
