@@ -104,6 +104,16 @@ You can evaluate the quality of generated summaries against reference summaries 
 - **BERTScore** (semantic similarity)
 - **Word Overlap** (lexical overlap)
 
+#### Evaluation Output
+Overall Efficiency by different task type
+
+![Overall Efficiency Chart](evaluation/TaskTypesEfficiencyBarChart.png)
+
+Overall Cosine Similirities, BERT Score and Word Overlap for each task type
+
+
+![Cosine Similirities, BERT Score and Word Overlap Chart](evaluation/GroupedBarChartBytask_Score.png)
+
 ### Step-by-Step Instructions
 
 1. Make sure your input JSON (`summaries.json`) looks like this:
