@@ -219,7 +219,3 @@ All files in `baseline/data/` are children's literature in `.txt` or `.pdf` form
 
 Developed by **Team Triple Trouble**  
 University of Bamberg — NLP Project (SS2025)
-
-
-self.embeddings = self.model.encode([d["text"] for d in self.documents], show_progress_bar=False)
-        print("Load complete.")
