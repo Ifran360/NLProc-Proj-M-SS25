@@ -18,6 +18,12 @@ This project implements a modular and extensible NLP pipeline capable of:
 
 ---
 
+## System Structure
+Here is our system flow chart
+![System Flow Chart](system_flowchartt.png)
+
+---
+
 ## Project Structure
 
 ```

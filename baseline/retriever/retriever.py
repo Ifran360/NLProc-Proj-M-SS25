@@ -79,6 +79,8 @@ class Retriever:
     def save(self, index_dir):
         os.makedirs(index_dir, exist_ok=True)
         faiss.write_index(self.index, os.path.join(index_dir, "faiss.index"))
+
+        # Save metadata
         metadata = {
             "chunk_ids": self.chunk_ids,
             "texts": [doc["text"] for doc in self.documents],
@@ -86,7 +88,10 @@ class Retriever:
         }
         with open(os.path.join(index_dir, "metadata.pkl"), "wb") as f:
             pickle.dump(metadata, f)
-
+        # Save BM25 model
+        with open(os.path.join(index_dir, "bm25.pkl"), "wb") as f:
+            pickle.dump(self.bm25_model, f)
+        print("Save complete: FAISS, metadata, and BM25.")
 
     def load(self, index_dir):
         print("Loading FAISS index...")
@@ -97,16 +102,22 @@ class Retriever:
 
         self.chunk_ids = metadata["chunk_ids"]
         texts = metadata["texts"]
+        self.embeddings = np.array(metadata["embeddings"], dtype='float32')
         self.documents = [{"id": cid, "text": txt} for cid, txt in zip(self.chunk_ids, texts)]
 
-        print("Initializing BM25...")
-        self.tokenized_corpus = [word_tokenize(txt.lower()) for txt in texts]
-        self.bm25_model = BM25Okapi(self.tokenized_corpus)
-
-        print("Encoding embeddings for FAISS...")
-        self.embeddings = np.array(metadata.get("embeddings"), dtype='float32')  # Load embeddings
+        print("Loading BM25 model...")
+        bm25_path = os.path.join(index_dir, "bm25.pkl")
+        if os.path.exists(bm25_path):
+            with open(bm25_path, "rb") as f:
+                self.bm25_model = pickle.load(f)
+        else:
+            # Fallback: rebuild BM25 if not found
+            print("BM25 pickle not found. Rebuilding from texts...")
+            self.tokenized_corpus = [word_tokenize(txt.lower()) for txt in texts]
+            self.bm25_model = BM25Okapi(self.tokenized_corpus)
 
         print("Load complete.")
+
 
     def query_faiss(self, query, k=5):
         query_emb = self.model.encode([query], normalize_embeddings=True).astype('float32')
