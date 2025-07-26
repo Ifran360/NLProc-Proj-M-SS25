@@ -24,7 +24,7 @@ This project implements a modular and extensible NLP pipeline capable of:
 
 Here is our system flow chart
 
-![System Flow Chart](systemflowchartt.png)
+![System Flow Chart](systemflowchart.png)
 
 ---
 
